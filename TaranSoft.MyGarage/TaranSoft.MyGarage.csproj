@@ -19,4 +19,15 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TaranSoft.MyGarage.Repository.Interfaces\TaranSoft.MyGarage.Repository.Interfaces.csproj" />
+    <ProjectReference Include="..\TaranSoft.MyGarage.Repository.MongoDB\TaranSoft.MyGarage.Repository.MongoDB.csproj" />
+    <ProjectReference Include="..\TaranSoft.MyGarage.Services.Interfaces\TaranSoft.MyGarage.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\TaranSoft.MyGarage.Services\TaranSoft.MyGarage.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

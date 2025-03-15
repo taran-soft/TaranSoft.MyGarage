@@ -1,10 +1,9 @@
-﻿using MyGarage.Common;
-using MyGarage.Controllers.Request;
-using MyGarage.Interfaces;
-using MyGarage.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyGarage.Data.Model;
+using TaranSoft.MyGarage.Contracts;
+using TaranSoft.MyGarage.Contracts.Request;
+using TaranSoft.MyGarage.Contracts.Common;
+using TaranSoft.MyGarage.Services.Interfaces;
 
 namespace MyGarage.Controllers;
 
@@ -13,19 +12,19 @@ namespace MyGarage.Controllers;
 [Route("api/cars")]
 public class CarsController : AuthorizedApiController
 {
-    private readonly ICarsRepository _repo;
+    private readonly ICarsService _carsService;
 
-    public CarsController(ICarsRepository repo)
+    public CarsController(ICarsService carsService)
     {
-        _repo = repo;
+        _carsService = carsService;
     }
 
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] SearchOptions options)
     {
-        var items = await _repo.Search(options);
+        var items = await _carsService.Search(options.Take, options.Skip);
 
-        return Ok(new PageOf<Car>
+        return Ok(new PageOf<CarDto>
         {
             Items = items,
             Total = items.Count
@@ -34,19 +33,19 @@ public class CarsController : AuthorizedApiController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] Car car)
+    public async Task<IActionResult> Post([FromBody] CarDto car)
     {
         if (CurrentUserId != null) car.CreatedBy = new Guid(CurrentUserId);
 
-        var id = await _repo.Create(car);
+        var id = await _carsService.Create(car);
         return CreatedAtAction(nameof(Get), new { id }, car);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateCar(Guid id, [FromBody] UpdateCarRequest request)
     {
-        await _repo.Update(id,
-            new Car
+        await _carsService.Update(id,
+            new CarDto
             {
                 Id = id,
                 Model = request.Model,
@@ -59,7 +58,7 @@ public class CarsController : AuthorizedApiController
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        await _repo.Delete(id);
+        await _carsService.Delete(id);
         return NoContent();
     }
 }

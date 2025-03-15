@@ -1,6 +1,8 @@
-﻿using MyGarage.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using MyGarage.Controllers.Request;
+﻿using Microsoft.AspNetCore.Mvc;
+using TaranSoft.MyGarage.Contracts;
+using TaranSoft.MyGarage.Contracts.Request;
+using TaranSoft.MyGarage.Repository.Interfaces;
+using TaranSoft.MyGarage.Services.Interfaces;
 
 namespace MyGarage.Controllers;
 
@@ -51,7 +53,12 @@ public class AuthController : AuthorizedApiController
     {
         try
         {
-            await _usersService.Register(request);
+            await _usersService.Register(new UserDto 
+            {
+                Email = request.Email,
+                Password = request.Password,
+                Nickname = request.Nickname
+            });
         }
         catch (Exception e)
         {
@@ -62,11 +69,4 @@ public class AuthController : AuthorizedApiController
             "User has been created successfully", 
             StatusCodes.Status201Created);
     }
-}
-
-public class UserCreateRequest
-{
-    public string Email { get; set; }
-    public string Nickname { get; set; }
-    public string Password { get; set; }
 }

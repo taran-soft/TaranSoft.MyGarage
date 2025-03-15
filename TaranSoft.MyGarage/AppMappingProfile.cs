@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MyGarage.Controllers.Request;
-using MyGarage.Data.Model;
+using TaranSoft.MyGarage.Contracts;
+using TaranSoft.MyGarage.Controllers.Request;
 
 namespace MyGarage;
 
@@ -8,6 +8,6 @@ public class AppMappingProfile : Profile
 {
     public AppMappingProfile()
     {
-        CreateMap<UpdateUserRequest, User>();
+        CreateMap<UpdateUserRequest, UserDto>();
     }
 }

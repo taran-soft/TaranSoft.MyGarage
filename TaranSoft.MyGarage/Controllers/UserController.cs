@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using MyGarage.Interfaces;
-using MyGarage.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyGarage.Common;
-using MyGarage.Controllers.Request;
-using MyGarage.Data.Model;
+using TaranSoft.MyGarage.Contracts;
+using TaranSoft.MyGarage.Contracts.Request;
+using TaranSoft.MyGarage.Controllers.Request;
+using TaranSoft.MyGarage.Services.Interfaces;
 
 namespace MyGarage.Controllers;
 
@@ -14,30 +13,27 @@ namespace MyGarage.Controllers;
 [Route("api/user")]
 public class UserController : ControllerBase
 {
-    private readonly IUserRepository _userRepository;
     private readonly IUsersService _usersService;
-    private readonly ICarsRepository _carsRepository;
+    private readonly ICarsService _carsService;
     private readonly IMapper _mapper;
     
     public UserController(
-        IUserRepository userRepository,
         IUsersService usersService,
-        ICarsRepository carsRepository,
+        ICarsService carsService,
         IMapper mapper)
     {
-        _userRepository = userRepository;
         _usersService = usersService;
-        _carsRepository = carsRepository;
+        _carsService = carsService;
         _mapper = mapper;
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var user = await _userRepository.GetById(id);
-        var cars = await _carsRepository.GetByCreatedUserId(id);
+        var user = await _usersService.GetUserById(id);
+        var cars = await _carsService.GetByUserId(id);
 
-        return Ok(new UserGarage
+        return Ok(new UserGarageDto
         {
             UserData = user,
             Cars = cars
@@ -47,15 +43,15 @@ public class UserController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetByName([FromQuery] string name)
     {
-        var user = await _userRepository.GetByNickname(name);
+        var user = await _usersService.GetByNickname(name);
         if (user == null)
         {
             return NotFound();
         }
 
-        var cars = await _carsRepository.GetByCreatedUserId(user.Id);
+        var cars = await _carsService.GetByUserId(user.Id);
 
-        return Ok(new UserGarage
+        return Ok(new UserGarageDto
         {
             UserData = user,
             Cars = cars
@@ -65,8 +61,8 @@ public class UserController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(Guid id, UpdateUserRequest request)
     {
-        var user = _mapper.Map<User>(request);
-       var isUpdated = await _userRepository.Update(id, user);
+        var user = _mapper.Map<UserDto>(request);
+       var isUpdated = await _usersService.UpdateUser(id, user);
 
        if (isUpdated)
        {

@@ -2,12 +2,11 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using MyGarage.Data;
-using MyGarage.Data.DbContext;
-using MyGarage.Data.Model;
-using MyGarage.Interfaces;
-using MyGarage.Models;
 using NUnit.Framework;
+using TaranSoft.MyGarage.Data.Models;
+using TaranSoft.MyGarage.Repository.Interfaces;
+using TaranSoft.MyGarage.Repository.MongoDB;
+using TaranSoft.MyGarage.Repository.MongoDB.DbContext;
 
 namespace MyGarage.Tests.Repository;
 

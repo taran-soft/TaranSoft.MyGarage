@@ -1,16 +1,17 @@
 ﻿using System.Text;
 using MyGarage;
-using MyGarage.Data;
-using MyGarage.Interfaces;
-using MyGarage.Models;
-using MyGarage.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyGarage.Common;
-using MyGarage.Data.DbContext;
-using MyGarage.Data.Model;
+using TaranSoft.MyGarage.Data.Models;
+using TaranSoft.MyGarage.Services.Interfaces;
+using TaranSoft.MyGarage.Services;
+using TaranSoft.MyGarage.Repository.Interfaces;
+using TaranSoft.MyGarage.Contracts;
+using TaranSoft.MyGarage.Repository.MongoDB;
+using TaranSoft.MyGarage.Repository.MongoDB.DbContext;
 
 var builder = WebApplication.CreateBuilder(args);
 

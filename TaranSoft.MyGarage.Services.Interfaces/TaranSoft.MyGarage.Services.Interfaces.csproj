@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TaranSoft.MyGarage.Models\TaranSoft.MyGarage.Data.Models.csproj" />
+    <ProjectReference Include="..\TaranSoft.MyGarage.Contracts\TaranSoft.MyGarage.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

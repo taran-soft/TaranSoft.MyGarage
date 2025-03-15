@@ -3,14 +3,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Moq;
-using MyGarage.Controllers;
-using MyGarage.Interfaces;
-using MyGarage.Services;
 using NUnit.Framework;
-using MyGarage.Data.Model;
 using Rhino.Mocks;
+using MyGarage.Tests;
+using TaranSoft.MyGarage.Services.Interfaces;
+using TaranSoft.MyGarage.Repository.Interfaces;
+using TaranSoft.MyGarage.Data.Models;
+using TaranSoft.MyGarage.Contracts;
+using TaranSoft.MyGarage.Services;
+using TaranSoft.MyGarage.Contracts.Request;
+using Amazon.Runtime.Internal.Util;
+using Microsoft.Extensions.Logging;
+using AutoMapper;
 
-namespace MyGarage.Tests.Service;
+namespace TaranSoft.MyGarage.Tests.Service;
 
 [TestFixture]
 public class UsersServiceTest
@@ -20,6 +26,8 @@ public class UsersServiceTest
     private Mock<IPasswordHasher<User>> _passwordHasherMock;
     private Mock<IIdGenerator> _idGeneratorMock;
     private Mock<IOptions<AppSettings>> _appSettings;
+    private Mock<ILogger<UsersService>> _usersServiceLoggerMock;
+    private Mock<IMapper> _mapperMock;
 
     [SetUp]
     public void Setup()
@@ -28,8 +36,10 @@ public class UsersServiceTest
         _appSettings = new Mock<IOptions<AppSettings>>();
         _passwordHasherMock = new Mock<IPasswordHasher<User>>();
         _idGeneratorMock = new Mock<IIdGenerator>();
+        _usersServiceLoggerMock = new Mock<ILogger<UsersService>>();
+        _mapperMock = new Mock<IMapper>();
 
-        _usersService = new UsersService(_userRepositoryMock.Object, _appSettings.Object, _passwordHasherMock.Object, _idGeneratorMock.Object);
+        _usersService = new UsersService(_userRepositoryMock.Object, _appSettings.Object, _passwordHasherMock.Object, _idGeneratorMock.Object, _usersServiceLoggerMock.Object, _mapperMock.Object);
 
     }
 
@@ -38,7 +48,7 @@ public class UsersServiceTest
     {
         //Given 
         
-        var userRequest = new UserCreateRequest
+        var userRequest = new UserDto
         {
             Email = "mygarage@g.c",
             Nickname = "My Garage Username",
@@ -67,7 +77,7 @@ public class UsersServiceTest
     public async Task TryToRegisterUser_Fail_UserExists()
     {
         //Given 
-        var userRequest = new UserCreateRequest
+        var userRequest = new UserDto
         {
             Email = "mygarage@g.c",
             Nickname = "My Garage Username",
