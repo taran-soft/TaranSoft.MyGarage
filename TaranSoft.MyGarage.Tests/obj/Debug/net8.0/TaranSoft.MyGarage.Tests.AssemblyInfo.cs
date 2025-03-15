@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TaranSoft.MyGarage.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ebbc9e6d22cc058ec3c6d1f6e295d3f0559454d")]
 [assembly: System.Reflection.AssemblyProductAttribute("TaranSoft.MyGarage.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TaranSoft.MyGarage.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
