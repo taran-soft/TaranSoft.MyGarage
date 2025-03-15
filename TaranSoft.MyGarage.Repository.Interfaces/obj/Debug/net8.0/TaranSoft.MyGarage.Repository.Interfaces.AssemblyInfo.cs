@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TaranSoft.MyGarage.Repository.Interfaces")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e461bcf8948eeb5b15053664bb7dfc0a93b462d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2e21a546e119b8a77a8b974e15ea6d7a04ce6686")]
 [assembly: System.Reflection.AssemblyProductAttribute("TaranSoft.MyGarage.Repository.Interfaces")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TaranSoft.MyGarage.Repository.Interfaces")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
