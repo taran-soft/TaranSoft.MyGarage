@@ -56,7 +56,7 @@ public class UserRepositoryTest : IDisposable
             Address = new AddressInfo
             {
                 City = "city",
-                Country = "country"
+                Country = new TaranSoft.MyGarage.Data.Models.EF.Country { Id = 1, Name = "" }
             }
         });
 
@@ -75,7 +75,7 @@ public class UserRepositoryTest : IDisposable
             Address = new AddressInfo
             {
                 City = "newCity",
-                Country = "newCountry"
+                Country = new TaranSoft.MyGarage.Data.Models.EF.Country {  Id = 1, Name = ""}
             }
         };
         
