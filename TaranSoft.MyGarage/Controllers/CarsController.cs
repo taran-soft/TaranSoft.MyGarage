@@ -7,7 +7,7 @@ using TaranSoft.MyGarage.Services.Interfaces;
 
 namespace MyGarage.Controllers;
 
-[Authorize]
+//[Authorize]
 [ApiController]
 [Route("api/cars")]
 public class CarsController : AuthorizedApiController
@@ -35,9 +35,16 @@ public class CarsController : AuthorizedApiController
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CarDto car)
     {
-        if (CurrentUserId != null) car.CreatedBy = new Guid(CurrentUserId);
+        //if (CurrentUserId != null) car.CreatedBy = new Guid(CurrentUserId);
 
-        var id = await _carsService.Create(car);
+        var carToCreate = new CarDto
+        {
+            Id = Guid.NewGuid(),
+            Name  = car.Name,
+            ManufacturerId = car.ManufacturerId,
+        };
+
+        var id = await _carsService.Create(carToCreate);
         return CreatedAtAction(nameof(Get), new { id }, car);
     }
 
@@ -48,9 +55,9 @@ public class CarsController : AuthorizedApiController
             new CarDto
             {
                 Id = id,
-                Model = request.Model,
-                Year = request.Year,
-                ImageId = request.ImageId
+                //Model = request.Model,
+                //Year = request.Year,
+                //ImageId = request.ImageId
             });
         return Ok();
     }

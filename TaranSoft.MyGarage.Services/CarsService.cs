@@ -7,17 +7,22 @@ namespace TaranSoft.MyGarage.Services
 {
     public class CarsService : ICarsService
     {
-        private readonly ICarsRepository _carsRepository;
+        private readonly IEFCarsRepository _carsRepository;
         private readonly IMapper _mapper;
-        public CarsService(ICarsRepository carsRepository, IMapper mapper) 
+        public CarsService(IEFCarsRepository carsRepository, IMapper mapper) 
         {
             _carsRepository = carsRepository;
             _mapper = mapper;
         }
 
-        public Task<Guid> Create(CarDto car)
+        public async Task<Guid> Create(CarDto car)
         {
-            throw new NotImplementedException();
+            var carEntity = _mapper.Map<Data.Models.EF.Car>(car);
+
+            var createdEntity = await _carsRepository.CreateAsync(carEntity);
+
+            return createdEntity.Id;
+
         }
 
         public Task Delete(Guid id)
@@ -27,14 +32,14 @@ namespace TaranSoft.MyGarage.Services
 
         public async Task<IList<CarDto>> GetByUserId(Guid id)
         {
-            var cars = await _carsRepository.GetByUserId(id);
-            return _mapper.Map<IList<CarDto>>(cars);
+            throw new NotImplementedException();
         }
 
         public async Task<IList<CarDto>> Search(int take, int skip)
         {
             var carsList = await _carsRepository.Search(take, skip);
-            throw new NotImplementedException();
+
+            return _mapper.Map<IList<CarDto>>(carsList);
         }
 
         public Task Update(Guid id, CarDto carDto)

@@ -18,6 +18,7 @@
         Infinity = 13,
         Ford = 14,
         Opel = 15,
+        Tesla = 16,
 
     }
 }

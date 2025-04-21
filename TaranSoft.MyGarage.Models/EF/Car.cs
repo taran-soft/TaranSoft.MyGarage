@@ -3,12 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaranSoft.MyGarage.Data.Models.EF
 {
-  // [Table("Countries")]
-    public class Country
+    [Table("Cars")]
+    public class Car : BaseEntity
     {
         [Required]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
 
+        // Foreign key
+        public long ManufacturerId { get; set; }
+        public Manufacturer Manufacturer {  get; set; }
     }
 }

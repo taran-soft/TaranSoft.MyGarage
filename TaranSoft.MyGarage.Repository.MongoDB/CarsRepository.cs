@@ -1,8 +1,8 @@
 ﻿using MongoDB.Bson;
 using TaranSoft.MyGarage.Repository.Interfaces;
-using TaranSoft.MyGarage.Data.Models;
 using TaranSoft.MyGarage.Repository.MongoDB.DbContext;
 using MongoDB.Driver;
+using TaranSoft.MyGarage.Data.Models.MongoDB;
 
 namespace TaranSoft.MyGarage.Repository.MongoDB;
 

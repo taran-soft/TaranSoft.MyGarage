@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace TaranSoft.MyGarage.Data.Models;
+namespace TaranSoft.MyGarage.Data.Models.MongoDB;
 
 [BsonIgnoreExtraElements]
 public class User

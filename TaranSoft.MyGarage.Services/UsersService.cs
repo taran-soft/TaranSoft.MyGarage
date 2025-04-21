@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TaranSoft.MyGarage.Services.Interfaces;
-using TaranSoft.MyGarage.Data.Models;
 using TaranSoft.MyGarage.Repository.Interfaces;
 using TaranSoft.MyGarage.Contracts;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
+using TaranSoft.MyGarage.Data.Models.MongoDB;
 
 namespace TaranSoft.MyGarage.Services;
 
@@ -17,7 +17,7 @@ public class UsersService : IUsersService
 {
     private readonly IUserRepository _userRepository;
     private readonly AppSettings _appSettings;
-    private readonly IPasswordHasher<User> _passwordHashService;
+    private readonly IPasswordHasher<Models.User> _passwordHashService;
     private readonly IIdGenerator _idGenerator;
     private readonly ILogger<UsersService> _logger;
     private readonly IMapper _mapper;
@@ -25,7 +25,7 @@ public class UsersService : IUsersService
     public UsersService(
         IUserRepository userRepository,
         IOptions<AppSettings> appSettings,
-        IPasswordHasher<User> passwordHashService,
+        IPasswordHasher<Models.User> passwordHashService,
         IIdGenerator idGenerator,
         ILogger<UsersService> logger,
         IMapper mapper
@@ -41,7 +41,15 @@ public class UsersService : IUsersService
 
     public async Task<string?> GetToken(string email, string password)
     {
-        var user = await _userRepository.GetByEmail(email);
+        var userEntity = await _userRepository.GetByEmail(email);
+
+        var user = new Models.User
+        {
+            Id = userEntity.Id,
+            Email = userEntity.Email,
+            Nickname = userEntity.Nickname,
+            Password = userEntity.Password
+        };
 
         var passwordVerificationResult = _passwordHashService.VerifyHashedPassword(user, user.Password, password);
         if (passwordVerificationResult != PasswordVerificationResult.Success)
@@ -80,7 +88,7 @@ public class UsersService : IUsersService
             throw new ApplicationException("User already exists");
         }
 
-        var user = new User
+        var user = new Models.User
         {
             Id = _idGenerator.NewGuid(),
             Email = userRequest.Email,
@@ -90,9 +98,10 @@ public class UsersService : IUsersService
         var hashedPassword = _passwordHashService.HashPassword(user, userRequest.Password);
         user.Password = hashedPassword;
         
+        var hashedUser = _mapper.Map<User>(user);
         try
         {
-            await _userRepository.Create(user);
+            await _userRepository.Create(hashedUser);
 
             return user.Id;
         }

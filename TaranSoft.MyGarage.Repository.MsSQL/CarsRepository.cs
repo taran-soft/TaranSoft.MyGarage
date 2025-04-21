@@ -1,20 +1,18 @@
-﻿using TaranSoft.MyGarage.Repository.Interfaces;
-using TaranSoft.MyGarage.Data.Models.MongoDB;
-using Microsoft.EntityFrameworkCore;
-using Car = TaranSoft.MyGarage.Data.Models.EF.Car;
+﻿using Microsoft.EntityFrameworkCore;
+using TaranSoft.MyGarage.Data.Models.EF;
+using TaranSoft.MyGarage.Repository.EntityFramework;
 
-namespace TaranSoft.MyGarage.Repository.EntityFramework;
-
-public class CarsRepository : BaseRepository<Car>, IEFCarsRepository
+public class CarsRepository
 {
     private readonly MainDbContext _context;
 
-    public CarsRepository(MainDbContext context) : base(context)
+    public CarsRepository(MainDbContext context)
     {
         _context = context;
     }
 
-    public async Task<Car> CreateAsync(Car car)
+    // ✅ Create
+    public async Task<Car> AddCarAsync(Car car)
     {
         _context.Cars.Add(car);
         await _context.SaveChangesAsync();
@@ -22,7 +20,7 @@ public class CarsRepository : BaseRepository<Car>, IEFCarsRepository
     }
 
     // ✅ Read (Get all cars)
-    public async Task<List<Car>> ListAllAsync()
+    public async Task<List<Car>> GetAllCarsAsync()
     {
         return await _context.Cars
             .Include(c => c.Manufacturer)
@@ -30,7 +28,7 @@ public class CarsRepository : BaseRepository<Car>, IEFCarsRepository
     }
 
     // ✅ Read (Get single car by ID)
-    public async Task<Car?> GetByIdAsync(Guid id)
+    public async Task<Car?> GetCarByIdAsync(Guid id)
     {
         return await _context.Cars
             .Include(c => c.Manufacturer)
@@ -38,7 +36,7 @@ public class CarsRepository : BaseRepository<Car>, IEFCarsRepository
     }
 
     // ✅ Update
-    public async Task<bool> UpdateAsync(Car updatedCar)
+    public async Task<bool> UpdateCarAsync(Car updatedCar)
     {
         var existingCar = await _context.Cars.FindAsync(updatedCar.Id);
 
@@ -53,7 +51,7 @@ public class CarsRepository : BaseRepository<Car>, IEFCarsRepository
     }
 
     // ✅ Delete
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteCarAsync(Guid id)
     {
         var car = await _context.Cars.FindAsync(id);
         if (car == null)
@@ -63,15 +61,4 @@ public class CarsRepository : BaseRepository<Car>, IEFCarsRepository
         await _context.SaveChangesAsync();
         return true;
     }
-
-    public async Task<IList<Car>> Search(int take, int skip)
-    {
-        return await _context.Cars
-        .Include(c => c.Manufacturer)
-        .OrderBy(c => c.Name) // Optional: Sort by Name
-        .Skip(skip)
-        .Take(take)
-        .ToListAsync();
-    }
-   
 }

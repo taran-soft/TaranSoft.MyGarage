@@ -1,4 +1,4 @@
-﻿using TaranSoft.MyGarage.Data.Models;
+﻿using TaranSoft.MyGarage.Data.Models.MongoDB;
 using TaranSoft.MyGarage.Repository.Interfaces;
 
 namespace TaranSoft.MyGarage.Repository.EntityFramework

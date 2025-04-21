@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TaranSoft.MyGarage.Data.Models.EF;
 
-namespace TaranSoft.MyGarage.Data.Models
+namespace TaranSoft.MyGarage.Data.Models.MongoDB
 {
-    [Table("Cars")]
+   // [Table("Cars")]
     public class Car : BaseEntity
     {
         [Required]
