@@ -1,8 +1,8 @@
 ﻿using MongoDB.Bson;
 using TaranSoft.MyGarage.Repository.Interfaces;
-using TaranSoft.MyGarage.Data.Models;
 using TaranSoft.MyGarage.Repository.MongoDB.DbContext;
 using MongoDB.Driver;
+using TaranSoft.MyGarage.Data.Models.MongoDB;
 
 namespace TaranSoft.MyGarage.Repository.MongoDB;
 
@@ -37,7 +37,7 @@ public class CarsRepository : ICarsRepository
 
     public async Task<IList<Car>> GetByUserId(Guid userId)
     {
-        return await _dbContext.Cars.Find(c => c.CreatedBy == userId).ToListAsync();
+        return await _dbContext.Cars.Find(c => c.CreatedBy.Id == userId).ToListAsync();
     }
 
     public async Task<Guid> Create(Car car)

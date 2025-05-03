@@ -10,6 +10,10 @@
     <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="AWSSDK.S3" Version="3.7.8.25" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.14">
       <PrivateAssets>all</PrivateAssets>
@@ -20,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TaranSoft.MyGarage.Repository.EntityFramework\TaranSoft.MyGarage.Repository.EntityFramework.csproj" />
     <ProjectReference Include="..\TaranSoft.MyGarage.Repository.Interfaces\TaranSoft.MyGarage.Repository.Interfaces.csproj" />
     <ProjectReference Include="..\TaranSoft.MyGarage.Repository.MongoDB\TaranSoft.MyGarage.Repository.MongoDB.csproj" />
     <ProjectReference Include="..\TaranSoft.MyGarage.Services.Interfaces\TaranSoft.MyGarage.Services.Interfaces.csproj" />

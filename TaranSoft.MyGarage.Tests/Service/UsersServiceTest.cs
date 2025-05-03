@@ -8,13 +8,13 @@ using Rhino.Mocks;
 using MyGarage.Tests;
 using TaranSoft.MyGarage.Services.Interfaces;
 using TaranSoft.MyGarage.Repository.Interfaces;
-using TaranSoft.MyGarage.Data.Models;
 using TaranSoft.MyGarage.Contracts;
 using TaranSoft.MyGarage.Services;
 using TaranSoft.MyGarage.Contracts.Request;
 using Amazon.Runtime.Internal.Util;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
+using TaranSoft.MyGarage.Data.Models.MongoDB;
 
 namespace TaranSoft.MyGarage.Tests.Service;
 
@@ -23,7 +23,7 @@ public class UsersServiceTest
 {
     private Mock<IUserRepository> _userRepositoryMock;
     private IUsersService _usersService;
-    private Mock<IPasswordHasher<User>> _passwordHasherMock;
+    private Mock<IPasswordHasher<Services.Models.User>> _passwordHasherMock;
     private Mock<IIdGenerator> _idGeneratorMock;
     private Mock<IOptions<AppSettings>> _appSettings;
     private Mock<ILogger<UsersService>> _usersServiceLoggerMock;
@@ -34,7 +34,7 @@ public class UsersServiceTest
     {
         _userRepositoryMock = new Mock<IUserRepository>();
         _appSettings = new Mock<IOptions<AppSettings>>();
-        _passwordHasherMock = new Mock<IPasswordHasher<User>>();
+        _passwordHasherMock = new Mock<IPasswordHasher<Services.Models.User>>();
         _idGeneratorMock = new Mock<IIdGenerator>();
         _usersServiceLoggerMock = new Mock<ILogger<UsersService>>();
         _mapperMock = new Mock<IMapper>();
@@ -61,7 +61,7 @@ public class UsersServiceTest
             .Setup(x => x.Create(It.IsAny<User>()))
             .Returns(Task.FromResult(expectedId));
 
-        _passwordHasherMock.Setup(x => x.HashPassword(Arg<User>.Is.Anything, Arg<string>.Is.Anything)).Returns(string.Empty);
+        _passwordHasherMock.Setup(x => x.HashPassword(Arg<Services.Models.User>.Is.Anything, Arg<string>.Is.Anything)).Returns(string.Empty);
         
         // When
         

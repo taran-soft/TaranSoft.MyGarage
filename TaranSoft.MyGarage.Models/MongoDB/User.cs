@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 
-namespace TaranSoft.MyGarage.Data.Models;
+namespace TaranSoft.MyGarage.Data.Models.MongoDB;
 
 [BsonIgnoreExtraElements]
 public class User
@@ -10,6 +11,7 @@ public class User
         Address = new AddressInfo();
     }
 
+    [Required]
     public Guid Id { get; set; }
     
     public string Name { get; set; }
@@ -35,12 +37,6 @@ public class User
     public GenderEnum Gender { get; set; }
     
     public AddressInfo Address { get; set; }
-}
-
-public class AddressInfo
-{
-    public string Country { get; set; }
-    public string City { get; set; }
 }
 
 public enum GenderEnum

@@ -5,25 +5,36 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyGarage.Common;
-using TaranSoft.MyGarage.Data.Models;
 using TaranSoft.MyGarage.Services.Interfaces;
 using TaranSoft.MyGarage.Services;
 using TaranSoft.MyGarage.Repository.Interfaces;
 using TaranSoft.MyGarage.Contracts;
-using TaranSoft.MyGarage.Repository.MongoDB;
 using TaranSoft.MyGarage.Repository.MongoDB.DbContext;
+using TaranSoft.MyGarage.Data.Models.MongoDB;
+using TaranSoft.MyGarage.Repository.EntityFramework;
+using Microsoft.EntityFrameworkCore;
+using System;
+using TaranSoft.MyGarage.Data.Models.EF;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<Settings>(builder.Configuration.GetSection("MongoDB"));
+var useMongoDB = builder.Configuration.GetValue<bool>("UseMongoDB");
+if (useMongoDB)
+{
+    UseMongoDB(builder);
+}
+else
+{
+    UseMsSQL(builder);
+}
 
-builder.Services.AddSingleton<IMongoDbContext, MongoDbContext>();
-builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
-builder.Services.AddSingleton<IIdGenerator, CustomIdGenerator>();
 
-builder.Services.AddSingleton<ICarsRepository, CarsRepository>();
-builder.Services.AddSingleton<IUserRepository, UserRepository>();
-builder.Services.AddSingleton<IUsersService, UsersService>();
+builder.Services.AddTransient<IPasswordHasher<TaranSoft.MyGarage.Services.Models.User>, PasswordHasher<TaranSoft.MyGarage.Services.Models.User>>();
+builder.Services.AddTransient<IIdGenerator, CustomIdGenerator>();
+
+
+//builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<ICarsService, CarsService>();
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -40,6 +51,7 @@ var appSettingsSection = builder.Configuration.GetSection("AppSettings");
 builder.Services.Configure<AppSettings>(appSettingsSection);
 var appSettings = appSettingsSection.Get<AppSettings>();
 
+
 var origins = appSettings.AllowedCORSOrignis;
 
 builder.Services.AddCors(setup =>
@@ -54,20 +66,7 @@ builder.Services.AddCors(setup =>
         });
 });
 
-var key = Encoding.ASCII.GetBytes(appSettings.JWTSecretKey);
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-.AddJwtBearer(x =>
-{
-    x.RequireHttpsMetadata = false;
-    x.SaveToken = true;
-    x.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false,
-        ValidateAudience = false
-    };
-});
+//AddAuthentication(builder, appSettings);
 
 builder.Services.AddHttpContextAccessor();
 
@@ -92,3 +91,65 @@ app.MapControllers();
 app.UseCors("policy");
 
 app.Run();
+
+static void UseMongoDB(WebApplicationBuilder builder)
+{
+    builder.Services.Configure<Settings>(builder.Configuration.GetSection("MongoDB"));
+    builder.Services.AddSingleton<IMongoDbContext, MongoDbContext>();
+
+    builder.Services.AddScoped<ICarsRepository, TaranSoft.MyGarage.Repository.MongoDB.CarsRepository>();
+    builder.Services.AddScoped<IUserRepository, TaranSoft.MyGarage.Repository.MongoDB.UserRepository>();
+}
+
+static void UseMsSQL(WebApplicationBuilder builder)
+{
+    builder.Services.AddDbContext<MainDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+    builder.Services.AddScoped<IEFCarsRepository, TaranSoft.MyGarage.Repository.EntityFramework.CarsRepository>();
+    //builder.Services.AddScoped<IUserRepository, TaranSoft.MyGarage.Repository.EntityFramework.UserRepository>();
+
+    //using var context = new MainDbContext();
+
+    //if (!context.Manufacturers.Any())
+    //{
+    //    var toyota = new Manufacturer { ManufacturerName = ManufacturerEnum.Toyota };
+    //    var tesla = new Manufacturer { ManufacturerName = ManufacturerEnum.Tesla };
+
+    //    context.Manufacturers.AddRange(toyota, tesla);
+    //    context.SaveChanges();
+
+    //    context.Cars.Add(new TaranSoft.MyGarage.Data.Models.EF.Car
+    //    {
+    //        Id = Guid.NewGuid(),
+    //        Name = "Model S",
+    //        ManufacturerId = tesla.Id
+    //    });
+
+    //    context.Cars.Add(new TaranSoft.MyGarage.Data.Models.EF.Car
+    //    {
+    //        Id = Guid.NewGuid(),
+    //        Name = "Corolla Sedan",
+    //        ManufacturerId = toyota.Id
+    //    });
+
+    //    context.SaveChanges();
+}
+
+static void AddAuthentication(WebApplicationBuilder builder, AppSettings appSettings)
+{
+    var key = Encoding.ASCII.GetBytes(appSettings.JWTSecretKey);
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(x =>
+    {
+        x.RequireHttpsMetadata = false;
+        x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+}

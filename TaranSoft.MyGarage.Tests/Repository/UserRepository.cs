@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
-using TaranSoft.MyGarage.Data.Models;
+using TaranSoft.MyGarage.Data.Models.MongoDB;
 using TaranSoft.MyGarage.Repository.Interfaces;
 using TaranSoft.MyGarage.Repository.MongoDB;
 using TaranSoft.MyGarage.Repository.MongoDB.DbContext;
@@ -56,7 +56,7 @@ public class UserRepositoryTest : IDisposable
             Address = new AddressInfo
             {
                 City = "city",
-                Country = "country"
+                Country = new TaranSoft.MyGarage.Data.Models.EF.Country { Id = 1, Name = "" }
             }
         });
 
@@ -75,7 +75,7 @@ public class UserRepositoryTest : IDisposable
             Address = new AddressInfo
             {
                 City = "newCity",
-                Country = "newCountry"
+                Country = new TaranSoft.MyGarage.Data.Models.EF.Country {  Id = 1, Name = ""}
             }
         };
         
