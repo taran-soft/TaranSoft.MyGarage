@@ -1,6 +1,6 @@
 ﻿namespace TaranSoft.MyGarage.Data.Models.EF
 {
-    public enum ManufacturerEnum
+    public enum ManufacturerEnum : int
     {
         None = 0,
         Toyota = 1,
