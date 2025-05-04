@@ -1,15 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using TaranSoft.MyGarage.Data.Models.MongoDB;
 
 namespace TaranSoft.MyGarage.Data.Models.EF
 {
-   // [Table("Users")]
-    public class User
+    [Table("Users")]
+    public class User : BaseEntity
     {
-        [Required]
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
 
         public string Surname { get; set; }
@@ -18,13 +14,13 @@ namespace TaranSoft.MyGarage.Data.Models.EF
 
         public string Email { get; set; }
 
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         public string Phone { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         public Guid PhotoId { get; set; }
 
@@ -32,6 +28,5 @@ namespace TaranSoft.MyGarage.Data.Models.EF
 
         public GenderEnum Gender { get; set; }
 
-        public AddressInfo Address { get; set; }
     }
 }
