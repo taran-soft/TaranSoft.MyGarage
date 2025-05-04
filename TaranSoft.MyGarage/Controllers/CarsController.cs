@@ -41,7 +41,7 @@ public class CarsController : AuthorizedApiController
         {
             Id = Guid.NewGuid(),
             Name  = car.Name,
-            ManufacturerId = car.ManufacturerId,
+            Manufacturer = car.Manufacturer,
         };
 
         var id = await _carsService.Create(carToCreate);
