@@ -1,6 +1,6 @@
 ﻿namespace TaranSoft.MyGarage.Contracts
 {
-    public class CarDto
+    public class MotocycleDto
     {
         public Guid Id { get; set; }
 
