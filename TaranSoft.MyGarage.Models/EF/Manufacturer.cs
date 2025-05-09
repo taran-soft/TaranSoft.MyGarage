@@ -7,8 +7,10 @@ namespace TaranSoft.MyGarage.Data.Models.EF
     {
         public long Id { get; set; }
         public ManufacturerEnum ManufacturerName { get; set; }
-        public Country ManufacturerCountry { get; set; }
         public long YearCreation { get; set; }
+
+        public int ManufacturerCountryId { get; set; }
+        public Country ManufacturerCountry { get; set; }
 
     }
 }

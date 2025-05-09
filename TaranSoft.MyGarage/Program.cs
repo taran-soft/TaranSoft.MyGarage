@@ -35,6 +35,7 @@ builder.Services.AddTransient<IIdGenerator, CustomIdGenerator>();
 
 //builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<ICarsService, CarsService>();
+builder.Services.AddScoped<IGarageService, GarageService>();
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -72,6 +73,18 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<MainDbContext>();
+
+    // Make sure DB is created
+    context.Database.Migrate();
+
+    // Seed data
+    SetupMockData(context);
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -107,33 +120,9 @@ static void UseMsSQL(WebApplicationBuilder builder)
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
     builder.Services.AddScoped<IEFCarsRepository, TaranSoft.MyGarage.Repository.EntityFramework.CarsRepository>();
+    builder.Services.AddScoped<IEFGaragesRepository, TaranSoft.MyGarage.Repository.EntityFramework.GaragesRepository>();
     //builder.Services.AddScoped<IUserRepository, TaranSoft.MyGarage.Repository.EntityFramework.UserRepository>();
-
-    //using var context = new MainDbContext();
-
-    //if (!context.Manufacturers.Any())
-    //{
-    //    var toyota = new Manufacturer { ManufacturerName = ManufacturerEnum.Toyota };
-    //    var tesla = new Manufacturer { ManufacturerName = ManufacturerEnum.Tesla };
-
-    //    context.Manufacturers.AddRange(toyota, tesla);
-    //    context.SaveChanges();
-
-    //    context.Cars.Add(new TaranSoft.MyGarage.Data.Models.EF.Car
-    //    {
-    //        Id = Guid.NewGuid(),
-    //        Name = "Model S",
-    //        ManufacturerId = tesla.Id
-    //    });
-
-    //    context.Cars.Add(new TaranSoft.MyGarage.Data.Models.EF.Car
-    //    {
-    //        Id = Guid.NewGuid(),
-    //        Name = "Corolla Sedan",
-    //        ManufacturerId = toyota.Id
-    //    });
-
-    //    context.SaveChanges();
+    
 }
 
 static void AddAuthentication(WebApplicationBuilder builder, AppSettings appSettings)
@@ -153,3 +142,87 @@ static void AddAuthentication(WebApplicationBuilder builder, AppSettings appSett
         };
     });
 }
+
+static void SetupMockData(MainDbContext context)
+{
+    if (context.Garages.Any())
+        return; // Already seeded
+
+    // Create Countries
+    var country1 = new Country { Name = "United States of America", CountryCode = "USA"};
+    var country2 = new Country { Name = "Japan", CountryCode = "JP"};
+
+    
+    // Create Manufacturer
+    var manufacturer1 = new Manufacturer { ManufacturerCountry = country1, ManufacturerName = ManufacturerEnum.Dodge, YearCreation = 1986 };
+    var manufacturer2 = new Manufacturer { ManufacturerCountry = country2, ManufacturerName = ManufacturerEnum.Toyota, YearCreation = 1901 };
+    var manufacturer3 = new Manufacturer { ManufacturerCountry = country2, ManufacturerName = ManufacturerEnum.Suzuki, YearCreation = 1964 };
+    var manufacturer4 = new Manufacturer { ManufacturerCountry = country2, ManufacturerName = ManufacturerEnum.Kawasaki, YearCreation = 1950 };
+
+    //Create Users
+    var user1 = new TaranSoft.MyGarage.Data.Models.EF.User { Name = "Vladyslav", Surname = "Tar", Nickname = "Vynd", DriverExperience = 10, Email = "vlad@gmail.com", Phone = "1234567890", Gender = TaranSoft.MyGarage.Data.Models.MongoDB.GenderEnum.Male};
+    var user2 = new TaranSoft.MyGarage.Data.Models.EF.User { Name = "Serg", Surname = "Postkevich",Nickname = "Geek", DriverExperience = 6, Email = "geek@gmail.com", Phone = "123654787", Gender = TaranSoft.MyGarage.Data.Models.MongoDB.GenderEnum.Male };
+
+
+    // Create a Common entity
+    var garage1 = new TaranSoft.MyGarage.Data.Models.EF.UserGarage { Owner = user1 };
+    var garage2 = new TaranSoft.MyGarage.Data.Models.EF.UserGarage { Owner = user2 };
+
+    // Create some Bs
+    var b1 = new TaranSoft.MyGarage.Data.Models.EF.Car 
+    {
+        Id = Guid.NewGuid(), 
+        Name = "Toyota Tundra",
+        Year = "2017",
+        Body = "Sedan",
+        Manufacturer = manufacturer2,
+        Garage = garage1
+    };
+    var b2 = new TaranSoft.MyGarage.Data.Models.EF.Car 
+    {
+        Id = Guid.NewGuid(), 
+        Garage = garage2,
+        Name = "Suzuki Jimny",
+        Year = "2008",
+        Body = "Hatchback",
+        Manufacturer = manufacturer3
+    };
+    var b3 = new TaranSoft.MyGarage.Data.Models.EF.Car
+    {
+        Id = Guid.NewGuid(),
+        Garage = garage1,
+        Name = "Dodge Journey",
+        Year = "2014",
+        Body = "Crossover",
+        Manufacturer = manufacturer1
+    };
+
+    // Create some Cs
+    var c1 = new Motorcycle { Id = Guid.NewGuid(), Garage = garage1, Name = "Kawasaki", Year = "2020", Manufacturer = manufacturer4 };
+    var c2 = new Motorcycle { Id = Guid.NewGuid(), Garage = garage2 , Name = "Suzuki Bandit 1.8", Year = "2005", Manufacturer = manufacturer3 };
+
+    // Add everything via Common
+    context.Countries.Add(country1); 
+    context.Countries.Add(country2); 
+    
+    context.Manufacturers.Add(manufacturer1); 
+    context.Manufacturers.Add(manufacturer2); 
+    context.Manufacturers.Add(manufacturer3); 
+    context.Manufacturers.Add(manufacturer4);
+
+    context.Users.Add(user1);
+    context.Users.Add(user2);
+
+    context.Cars.Add(b1);
+    context.Cars.Add(b2);
+    context.Cars.Add(b3);
+
+    context.Motorcycles.Add(c1);
+    context.Motorcycles.Add(c2);
+    
+    context.Garages.Add(garage1);
+    context.Garages.Add(garage2);
+
+    context.SaveChanges();
+}
+

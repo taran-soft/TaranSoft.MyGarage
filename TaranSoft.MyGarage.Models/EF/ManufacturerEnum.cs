@@ -19,6 +19,10 @@
         Ford = 14,
         Opel = 15,
         Tesla = 16,
+        Dodge = 17,
+        Nissan = 18,
+        Kawasaki = 19,
+        Suzuki = 20,
 
     }
 }

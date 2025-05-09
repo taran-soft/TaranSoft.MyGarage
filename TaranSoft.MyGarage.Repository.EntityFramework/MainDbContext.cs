@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaranSoft.MyGarage.Data.Models.EF;
-using TaranSoft.MyGarage.Data.Models.MongoDB;
 
 namespace TaranSoft.MyGarage.Repository.EntityFramework
 {
     public class MainDbContext : DbContext
     {
-        //public DbSet<Data.Models.EF.User> Users { get; set; }
-        public DbSet<Data.Models.EF.Car> Cars { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Motorcycle> Motorcycles { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Country> Countries { get; set; }
-        //public DbSet<UserGarage> UserGarage { get; set; }
+        public DbSet<UserGarage> Garages { get; set; }
 
         public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
         {
@@ -18,19 +18,35 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Car>()
+                .HasOne(b => b.Garage)
+                .WithMany(c => c.Cars)
+                .HasForeignKey(b => b.GarageId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Motorcycle>()
+                .HasOne(c => c.Garage)
+                .WithMany(common => common.Motocycles)
+                .HasForeignKey(c => c.GarageId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Car>()
+                .HasOne(b => b.Manufacturer);
+
+            modelBuilder.Entity<Motorcycle>()
+                .HasOne(b => b.Manufacturer);
+
+            modelBuilder.Entity<Manufacturer>()
+                .HasOne(c => c.ManufacturerCountry);
+
             modelBuilder.Entity<Manufacturer>()
                 .Property(m => m.ManufacturerName)
                 .HasConversion<string>();
 
-            modelBuilder.Entity<Manufacturer>()
-                .HasOne<Country>();
-
-            modelBuilder.Entity<Data.Models.EF.Car>()
-                .HasOne(c => c.Manufacturer);
-                //.WithMany(m => m.Cars)
-                //.HasForeignKey(c => c.ManufacturerId);
-            
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<UserGarage>()
+                .HasOne(u => u.Owner);
 
         }
     }

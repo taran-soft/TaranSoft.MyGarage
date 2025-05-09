@@ -1,6 +1,5 @@
-﻿using TaranSoft.MyGarage.Repository.Interfaces;
-using TaranSoft.MyGarage.Data.Models.MongoDB;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using TaranSoft.MyGarage.Repository.Interfaces;
 using Car = TaranSoft.MyGarage.Data.Models.EF.Car;
 
 namespace TaranSoft.MyGarage.Repository.EntityFramework;

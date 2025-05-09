@@ -10,5 +10,10 @@ public class AppMappingProfile : Profile
     {
         CreateMap<UpdateUserRequest, UserDto>();
         CreateMap<TaranSoft.MyGarage.Data.Models.EF.Car, CarDto>().ReverseMap();
+        CreateMap<TaranSoft.MyGarage.Data.Models.EF.User, UserDto>().ReverseMap();
+        CreateMap<TaranSoft.MyGarage.Data.Models.EF.Motorcycle, MotocycleDto>().ReverseMap();
+        CreateMap<TaranSoft.MyGarage.Data.Models.EF.UserGarage, GarageDto>().ReverseMap();
+        CreateMap<TaranSoft.MyGarage.Data.Models.EF.Manufacturer, ManufacturerDto>().ReverseMap();
+        CreateMap<TaranSoft.MyGarage.Data.Models.EF.Country, CountryDto>().ReverseMap();
     }
 }
