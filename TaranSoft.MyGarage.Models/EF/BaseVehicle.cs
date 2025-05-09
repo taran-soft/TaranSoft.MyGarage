@@ -6,11 +6,12 @@ namespace TaranSoft.MyGarage.Data.Models.EF
     [Table("Vehicle")]
     public class Vehicle : BaseEntity
     {
-        public string Name { get; set; }
+        [Required]
+        public required string Name { get; set; }
         public string? Model { get; set; }
         public string? Trim { get; set; }
         public string? Engine { get; set; }
-        public string Year { get; set; }
+        public string? Year { get; set; }
 
         // Foreign key
         public long ManufacturerId { get; set; }

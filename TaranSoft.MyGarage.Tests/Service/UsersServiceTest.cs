@@ -10,8 +10,6 @@ using TaranSoft.MyGarage.Services.Interfaces;
 using TaranSoft.MyGarage.Repository.Interfaces;
 using TaranSoft.MyGarage.Contracts;
 using TaranSoft.MyGarage.Services;
-using TaranSoft.MyGarage.Contracts.Request;
-using Amazon.Runtime.Internal.Util;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using TaranSoft.MyGarage.Data.Models.MongoDB;
@@ -97,7 +95,7 @@ public class UsersServiceTest
         
         var ex = Assert.ThrowsAsync<ApplicationException>(() => _usersService.Register(userRequest));
         Assert.IsNotNull(ex);
-        Assert.That(ex.Message, Is.EqualTo("User already exists"));
+        Assert.That(ex?.Message, Is.EqualTo("User already exists"));
         
     }
 }

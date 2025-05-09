@@ -17,8 +17,8 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CountryCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CountryCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,14 +31,14 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Nickname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    PhotoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PhotoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     DriverExperience = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false)
                 },
@@ -92,12 +92,12 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GarageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GarageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Trim = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Engine = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Year = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Year = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ManufacturerId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -127,7 +127,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Trim = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Engine = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Year = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Year = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ManufacturerId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>

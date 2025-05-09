@@ -6,6 +6,6 @@ namespace TaranSoft.MyGarage.Data.Models.EF;
 public class AddressInfo : BaseEntity
 {
     public int CountryId { get; set; }
-    public Country Country { get; set; }
-    public string City { get; set; }
+    public Country? Country { get; set; }
+    public string? City { get; set; }
 }
