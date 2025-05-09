@@ -10,7 +10,7 @@ namespace TaranSoft.MyGarage.Data.Models.EF
         public long YearCreation { get; set; }
 
         public int ManufacturerCountryId { get; set; }
-        public Country ManufacturerCountry { get; set; }
+        public Country? ManufacturerCountry { get; set; }
 
     }
 }

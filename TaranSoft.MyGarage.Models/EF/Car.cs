@@ -8,7 +8,7 @@ namespace TaranSoft.MyGarage.Data.Models.EF
     {
         public string? Body { get; set; }
         // Foreign key
-        public Guid GarageId { get; set; }
-        public UserGarage Garage { get; set; }
+        public Guid? GarageId { get; set; }
+        public UserGarage? Garage { get; set; }
     }
 }

@@ -2,8 +2,8 @@
 
 public class UserGarage
 {
-    public User UserData { get; set; }
+    public User? UserData { get; set; }
     
-    public IEnumerable<Car> Cars { get; set; }
+    public IEnumerable<Car>? Cars { get; set; }
 
 }

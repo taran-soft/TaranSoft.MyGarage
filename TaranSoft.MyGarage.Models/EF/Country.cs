@@ -8,8 +8,9 @@ namespace TaranSoft.MyGarage.Data.Models.EF
     {
         [Required]
         public int Id { get; set; }
-        public string CountryCode { get; set; }
-        public string Name { get; set; }
+        [Required]
+        public required string Name { get; set; }
+        public string? CountryCode { get; set; }
 
     }
 }

@@ -12,7 +12,7 @@ using TaranSoft.MyGarage.Repository.EntityFramework;
 namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20250509162250_InitialSetup")]
+    [Migration("20250509170118_InitialSetup")]
     partial class InitialSetup
     {
         /// <inheritdoc />
@@ -37,7 +37,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                     b.Property<string>("Engine")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("GarageId")
+                    b.Property<Guid?>("GarageId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("ManufacturerId")
@@ -54,7 +54,6 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Year")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -75,7 +74,6 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CountryCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -138,7 +136,6 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Year")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -184,14 +181,12 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PhotoId")
+                    b.Property<Guid?>("PhotoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -220,8 +215,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                     b.HasOne("TaranSoft.MyGarage.Data.Models.EF.UserGarage", "Garage")
                         .WithMany("Cars")
                         .HasForeignKey("GarageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TaranSoft.MyGarage.Data.Models.EF.Manufacturer", "Manufacturer")
                         .WithMany()

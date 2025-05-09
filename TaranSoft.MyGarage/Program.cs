@@ -53,19 +53,23 @@ builder.Services.Configure<AppSettings>(appSettingsSection);
 var appSettings = appSettingsSection.Get<AppSettings>();
 
 
-var origins = appSettings.AllowedCORSOrignis;
-
-builder.Services.AddCors(setup =>
+var origins = appSettings?.AllowedCORSOrignis;
+if (origins != null) 
 {
-    setup.AddPolicy("policy",
-        config =>
-        {
-            config
-                .WithOrigins(origins)
-                .WithHeaders("Origin", "X-Requested-Width", "Content-Type", "Accept", "Authorization")
-                .WithMethods("GET", "POST", "PUT", "DELETE");
-        });
-});
+    builder.Services.AddCors(setup =>
+    {
+        setup.AddPolicy("policy",
+            config =>
+            {
+                config
+                    .WithOrigins(origins)
+                    .WithHeaders("Origin", "X-Requested-Width", "Content-Type", "Accept", "Authorization")
+                    .WithMethods("GET", "POST", "PUT", "DELETE");
+            });
+    });
+
+}
+
 
 //AddAuthentication(builder, appSettings);
 
