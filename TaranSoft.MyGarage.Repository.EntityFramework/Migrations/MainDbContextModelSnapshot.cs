@@ -109,7 +109,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                     b.ToTable("Manufacturers");
                 });
 
-            modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.Motocycle", b =>
+            modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.Motorcycle", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -144,7 +144,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
 
                     b.HasIndex("ManufacturerId");
 
-                    b.ToTable("Motocycles");
+                    b.ToTable("Motorcycles");
                 });
 
             modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.User", b =>
@@ -242,7 +242,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                     b.Navigation("ManufacturerCountry");
                 });
 
-            modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.Motocycle", b =>
+            modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.Motorcycle", b =>
                 {
                     b.HasOne("TaranSoft.MyGarage.Data.Models.EF.UserGarage", "Garage")
                         .WithMany("Motocycles")

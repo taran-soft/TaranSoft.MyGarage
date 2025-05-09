@@ -11,7 +11,7 @@ public class UserGarage : BaseEntity
     public User Owner { get; set; }
 
     public ICollection<Car> Cars { get; set; } = new List<Car>();
-    public ICollection<Motocycle> Motocycles { get; set; } = new List<Motocycle>();
+    public ICollection<Motorcycle> Motocycles { get; set; } = new List<Motorcycle>();
 
 
 }

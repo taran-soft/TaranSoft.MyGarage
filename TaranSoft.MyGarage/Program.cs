@@ -198,8 +198,8 @@ static void SetupMockData(MainDbContext context)
     };
 
     // Create some Cs
-    var c1 = new TaranSoft.MyGarage.Data.Models.EF.Motocycle { Id = Guid.NewGuid(), Garage = garage1, Name = "Kawasaki", Year = "2020", Manufacturer = manufacturer4 };
-    var c2 = new TaranSoft.MyGarage.Data.Models.EF.Motocycle { Id = Guid.NewGuid(), Garage = garage2 , Name = "Suzuki Bandit 1.8", Year = "2005", Manufacturer = manufacturer3 };
+    var c1 = new Motorcycle { Id = Guid.NewGuid(), Garage = garage1, Name = "Kawasaki", Year = "2020", Manufacturer = manufacturer4 };
+    var c2 = new Motorcycle { Id = Guid.NewGuid(), Garage = garage2 , Name = "Suzuki Bandit 1.8", Year = "2005", Manufacturer = manufacturer3 };
 
     // Add everything via Common
     context.Countries.Add(country1); 
@@ -217,8 +217,8 @@ static void SetupMockData(MainDbContext context)
     context.Cars.Add(b2);
     context.Cars.Add(b3);
 
-    context.Motocycles.Add(c1);
-    context.Motocycles.Add(c2);
+    context.Motorcycles.Add(c1);
+    context.Motorcycles.Add(c2);
     
     context.Garages.Add(garage1);
     context.Garages.Add(garage2);

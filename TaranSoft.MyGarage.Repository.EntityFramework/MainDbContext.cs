@@ -7,7 +7,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Car> Cars { get; set; }
-        public DbSet<Motocycle> Motocycles { get; set; }
+        public DbSet<Motorcycle> Motorcycles { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<UserGarage> Garages { get; set; }
@@ -26,7 +26,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework
                 .HasForeignKey(b => b.GarageId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Motocycle>()
+            modelBuilder.Entity<Motorcycle>()
                 .HasOne(c => c.Garage)
                 .WithMany(common => common.Motocycles)
                 .HasForeignKey(c => c.GarageId)
@@ -35,7 +35,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework
             modelBuilder.Entity<Car>()
                 .HasOne(b => b.Manufacturer);
 
-            modelBuilder.Entity<Motocycle>()
+            modelBuilder.Entity<Motorcycle>()
                 .HasOne(b => b.Manufacturer);
 
             modelBuilder.Entity<Manufacturer>()

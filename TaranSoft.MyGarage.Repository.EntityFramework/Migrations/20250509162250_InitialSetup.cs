@@ -118,7 +118,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Motocycles",
+                name: "Motorcycles",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -132,15 +132,15 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Motocycles", x => x.Id);
+                    table.PrimaryKey("PK_Motorcycles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Motocycles_Manufacturers_ManufacturerId",
+                        name: "FK_Motorcycles_Manufacturers_ManufacturerId",
                         column: x => x.ManufacturerId,
                         principalTable: "Manufacturers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Motocycles_UsersGarage_GarageId",
+                        name: "FK_Motorcycles_UsersGarage_GarageId",
                         column: x => x.GarageId,
                         principalTable: "UsersGarage",
                         principalColumn: "Id",
@@ -163,13 +163,13 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                 column: "ManufacturerCountryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Motocycles_GarageId",
-                table: "Motocycles",
+                name: "IX_Motorcycles_GarageId",
+                table: "Motorcycles",
                 column: "GarageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Motocycles_ManufacturerId",
-                table: "Motocycles",
+                name: "IX_Motorcycles_ManufacturerId",
+                table: "Motorcycles",
                 column: "ManufacturerId");
 
             migrationBuilder.CreateIndex(
@@ -185,7 +185,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                 name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "Motocycles");
+                name: "Motorcycles");
 
             migrationBuilder.DropTable(
                 name: "Manufacturers");

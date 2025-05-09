@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaranSoft.MyGarage.Data.Models.EF
 {
-    [Table("Motocycles")]
-    public class Motocycle : Vehicle
+    [Table("Motorcycles")]
+    public class Motorcycle : Vehicle
     {
         // Foreign key
         public Guid GarageId { get; set; }
