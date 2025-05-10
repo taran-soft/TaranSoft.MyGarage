@@ -17,51 +17,45 @@ public class GaragesRepository : BaseRepository<UserGarage>, IEFGaragesRepositor
     // ✅ Read (Get all cars)
     public async Task<List<UserGarage>> ListAllAsync()
     {
-        throw new NotImplementedException();
-        //return await _context.Cars
-        //    .Include(c => c.Manufacturer)
-        //    .ToListAsync();
+        return await _context.Garages.ToListAsync();
     }
 
-    // ✅ Read (Get single car by ID)
-    public async Task<UserGarage?> GetByIdAsync(Guid id)
-    {
-        throw new NotImplementedException();
-        //return await _context.Cars
-        //    .Include(c => c.Manufacturer)
-        //    .FirstOrDefaultAsync(c => c.Id == id);
-    }
+    //// ✅ Read (Get single car by ID)
+    //public async Task<UserGarage?> GetByIdAsync(long id)
+    //{
+    //    return await _context.Garages
+    //        .Include(c => c.Manufacturer)
+    //        .FirstOrDefaultAsync(c => c.Id == id);
+    //}
 
-    // ✅ Update
-    public async Task<bool> UpdateAsync(UserGarage updatedCar)
-    {
-        throw new NotImplementedException();
-        //var existingCar = await _context.Cars.FindAsync(updatedCar.Id);
+    //// ✅ Update
+    //public async Task<bool> UpdateAsync(UserGarage updatedCar)
+    //{
+    //    var existingCar = await _context.Cars.FindAsync(updatedCar.Id);
 
-        //if (existingCar == null)
-        //    return false;
+    //    if (existingCar == null)
+    //        return false;
 
-        //existingCar.Name = updatedCar.Name;
-        //existingCar.ManufacturerId = updatedCar.ManufacturerId;
+    //    existingCar.Name = updatedCar.Name;
+    //    existingCar.ManufacturerId = updatedCar.ManufacturerId;
 
-        //await _context.SaveChangesAsync();
-        //return true;
-    }
+    //    await _context.SaveChangesAsync();
+    //    return true;
+    //}
 
-    // ✅ Delete
-    public async Task<bool> DeleteAsync(Guid id)
-    {
-        throw new NotImplementedException();
-        //var car = await _context.Cars.FindAsync(id);
-        //if (car == null)
-        //    return false;
+    //// ✅ Delete
+    //public async Task<bool> DeleteAsync(long id)
+    //{
+    //    var car = await _context.Cars.FindAsync(id);
+    //    if (car == null)
+    //        return false;
 
-        //_context.Cars.Remove(car);
-        //await _context.SaveChangesAsync();
-        //return true;
-    }
+    //    _context.Cars.Remove(car);
+    //    await _context.SaveChangesAsync();
+    //    return true;
+    //}
 
-    public async Task<IList<Data.Models.EF.UserGarage>> Search(int take, int skip)
+    public async Task<IList<UserGarage>> Search(int take, int skip)
     {
         return await _context.Garages
         .Skip(skip)
@@ -69,7 +63,7 @@ public class GaragesRepository : BaseRepository<UserGarage>, IEFGaragesRepositor
         .Include(g => g.Cars)
         .ThenInclude(c => c.Manufacturer)
         .ThenInclude(m => m.ManufacturerCountry)
-        .Include(g => g.Motocycles)
+        .Include(g => g.Motorcycles)
         .ThenInclude(m => m.Manufacturer)
         .ThenInclude(m => m.ManufacturerCountry)
         .Include(g => g.Owner)

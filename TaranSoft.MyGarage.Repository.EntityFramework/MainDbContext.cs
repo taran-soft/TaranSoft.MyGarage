@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaranSoft.MyGarage.Data.Models.EF;
+using TaranSoft.MyGarage.Data.Models.EF.Vehicles;
 
 namespace TaranSoft.MyGarage.Repository.EntityFramework
 {
@@ -8,6 +9,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework
         public DbSet<User> Users { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Motorcycle> Motorcycles { get; set; }
+        public DbSet<Trailer> Trailers { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<UserGarage> Garages { get; set; }
@@ -20,22 +22,19 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Car>()
-                .HasOne(b => b.Garage)
-                .WithMany(c => c.Cars)
-                .HasForeignKey(b => b.GarageId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Motorcycle>()
+            modelBuilder.Entity<Vehicle>()
                 .HasOne(c => c.Garage)
-                .WithMany(common => common.Motocycles)
+                .WithMany(common => common.Vehicles)
                 .HasForeignKey(c => c.GarageId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Car>()
                 .HasOne(b => b.Manufacturer);
 
             modelBuilder.Entity<Motorcycle>()
+                .HasOne(b => b.Manufacturer);
+
+            modelBuilder.Entity<Trailer>()
                 .HasOne(b => b.Manufacturer);
 
             modelBuilder.Entity<Manufacturer>()
@@ -46,7 +45,7 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework
                 .HasConversion<string>();
 
             modelBuilder.Entity<UserGarage>()
-                .HasOne(u => u.Owner);
+                .HasOne(g => g.Owner);
 
         }
     }

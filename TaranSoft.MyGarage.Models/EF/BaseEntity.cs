@@ -1,10 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaranSoft.MyGarage.Data.Models.EF
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public Guid Id { get; set; }
+        public long Id { get; set; }
+        
+    }
+
+    public abstract class BaseAuditableEntity : BaseEntity
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreatedAt { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedAt { get; set; }
     }
 }

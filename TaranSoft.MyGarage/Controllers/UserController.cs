@@ -49,7 +49,7 @@ public class UserController : ControllerBase
             return NotFound();
         }
 
-        var cars = await _carsService.GetByUserId(user.Id);
+        var cars = await _carsService.GetByUserId(Guid.NewGuid());
 
         return Ok(new UserGarageDto
         {

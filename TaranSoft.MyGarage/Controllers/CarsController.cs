@@ -39,7 +39,6 @@ public class CarsController : AuthorizedApiController
 
         var carToCreate = new CarDto
         {
-            Id = Guid.NewGuid(),
             Name  = car.Name,
             Manufacturer = car.Manufacturer,
         };
@@ -54,7 +53,6 @@ public class CarsController : AuthorizedApiController
         await _carsService.Update(id,
             new CarDto
             {
-                Id = id,
                 //Model = request.Model,
                 //Year = request.Year,
                 //ImageId = request.ImageId

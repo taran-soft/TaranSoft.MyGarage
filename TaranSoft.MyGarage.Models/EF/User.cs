@@ -5,7 +5,7 @@ using TaranSoft.MyGarage.Data.Models.MongoDB;
 namespace TaranSoft.MyGarage.Data.Models.EF
 {
     [Table("Users")]
-    public class User : BaseEntity
+    public class User : BaseAuditableEntity
     {
         [Required]
         public required string Name { get; set; }
@@ -31,6 +31,5 @@ namespace TaranSoft.MyGarage.Data.Models.EF
         public int DriverExperience { get; set; }
 
         public GenderEnum Gender { get; set; }
-
     }
 }

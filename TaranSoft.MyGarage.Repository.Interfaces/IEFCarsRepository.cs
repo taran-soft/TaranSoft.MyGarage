@@ -1,4 +1,4 @@
-﻿using Car = TaranSoft.MyGarage.Data.Models.EF.Car;
+﻿using Car = TaranSoft.MyGarage.Data.Models.EF.Vehicles.Car;
 
 namespace TaranSoft.MyGarage.Repository.Interfaces;
 

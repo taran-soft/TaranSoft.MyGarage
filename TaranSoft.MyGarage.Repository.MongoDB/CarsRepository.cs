@@ -30,28 +30,28 @@ public class CarsRepository : ICarsRepository
         return await _dbContext.Cars.Find(c => true).ToListAsync();
     }
 
-    public async Task<Car> GetById(Guid id)
+    public async Task<Car> GetById(long id)
     {
         return await _dbContext.Cars.Find(c => c.Id == id).FirstOrDefaultAsync();
     }
 
-    public async Task<IList<Car>> GetByUserId(Guid userId)
+    public async Task<IList<Car>> GetByUserId(long userId)
     {
         return await _dbContext.Cars.Find(c => c.CreatedBy.Id == userId).ToListAsync();
     }
 
-    public async Task<Guid> Create(Car car)
+    public async Task<long> Create(Car car)
     {
         await _dbContext.Cars.InsertOneAsync(car);
         return car.Id;
     }
 
-    public async Task Update(Guid id, Car car)
+    public async Task Update(long id, Car car)
     {
         await _dbContext.Cars.ReplaceOneAsync(c => c.Id == id, car);
     }
 
-    public async Task Delete(Guid id)
+    public async Task Delete(long id)
     {
         await _dbContext.Cars.DeleteOneAsync(c => c.Id == id);
     }
