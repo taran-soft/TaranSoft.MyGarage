@@ -1,9 +1,7 @@
 ﻿namespace TaranSoft.MyGarage.Contracts
 {
-    public class CarDto
+    public class CarDto : BaseEntityDto
     {
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
 
         public ManufacturerDto Manufacturer { get; set; }

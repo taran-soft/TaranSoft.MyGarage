@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using TaranSoft.MyGarage.Contracts;
+using TaranSoft.MyGarage.Data.Models.EF.Vehicles;
 using TaranSoft.MyGarage.Repository.Interfaces;
 using TaranSoft.MyGarage.Services.Interfaces;
 
@@ -17,11 +18,11 @@ namespace TaranSoft.MyGarage.Services
 
         public async Task<Guid> Create(CarDto car)
         {
-            var carEntity = _mapper.Map<Data.Models.EF.Car>(car);
+            var carEntity = _mapper.Map<Car>(car);
 
             var createdEntity = await _carsRepository.CreateAsync(carEntity);
 
-            return createdEntity.Id;
+            return Guid.NewGuid();
 
         }
 
