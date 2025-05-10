@@ -1,4 +1,6 @@
-﻿namespace TaranSoft.MyGarage.Contracts
+﻿using TaranSoft.MyGarage.Contracts.VehicleDto;
+
+namespace TaranSoft.MyGarage.Contracts
 {
     public class UserGarageDto
     {

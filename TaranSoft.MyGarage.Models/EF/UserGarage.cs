@@ -15,6 +15,7 @@ public class UserGarage : BaseAuditableEntity
     public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
     public ICollection<Car> Cars => Vehicles.OfType<Car>().ToList();
     public ICollection<Motorcycle> Motorcycles => Vehicles.OfType<Motorcycle>().ToList();
+    public ICollection<Trailer> Trailers => Vehicles.OfType<Trailer>().ToList();
 
 
 }

@@ -4,6 +4,7 @@ using TaranSoft.MyGarage.Contracts;
 using TaranSoft.MyGarage.Contracts.Request;
 using TaranSoft.MyGarage.Contracts.Common;
 using TaranSoft.MyGarage.Services.Interfaces;
+using TaranSoft.MyGarage.Contracts.VehicleDto;
 
 namespace MyGarage.Controllers;
 
