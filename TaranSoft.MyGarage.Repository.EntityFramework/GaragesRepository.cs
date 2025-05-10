@@ -66,6 +66,9 @@ public class GaragesRepository : BaseRepository<UserGarage>, IEFGaragesRepositor
         .Include(g => g.Motorcycles)
         .ThenInclude(m => m.Manufacturer)
         .ThenInclude(m => m.ManufacturerCountry)
+        .Include(g => g.Trailers)
+        .ThenInclude(m => m.Manufacturer)
+        .ThenInclude(m => m.ManufacturerCountry)
         .Include(g => g.Owner)
         .ToListAsync();
     }

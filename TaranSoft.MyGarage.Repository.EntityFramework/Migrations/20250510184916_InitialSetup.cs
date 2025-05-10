@@ -194,11 +194,17 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                     NumberOfAxles = table.Column<int>(type: "int", nullable: true),
                     TrailerType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HasBrakes = table.Column<bool>(type: "bit", nullable: false),
-                    LengthMeters = table.Column<float>(type: "real", nullable: true)
+                    LengthMeters = table.Column<float>(type: "real", nullable: true),
+                    UserGarageId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Trailers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Trailers_UserGarages_UserGarageId",
+                        column: x => x.UserGarageId,
+                        principalTable: "UserGarages",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Trailers_Vehicle_Id",
                         column: x => x.Id,
@@ -220,6 +226,11 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Motorcycles_UserGarageId",
                 table: "Motorcycles",
+                column: "UserGarageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Trailers_UserGarageId",
+                table: "Trailers",
                 column: "UserGarageId");
 
             migrationBuilder.CreateIndex(

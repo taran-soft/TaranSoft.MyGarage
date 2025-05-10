@@ -12,7 +12,7 @@ using TaranSoft.MyGarage.Repository.EntityFramework;
 namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20250510183245_InitialSetup")]
+    [Migration("20250510184916_InitialSetup")]
     partial class InitialSetup
     {
         /// <inheritdoc />
@@ -289,6 +289,11 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                     b.Property<string>("TrailerType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("UserGarageId")
+                        .HasColumnType("bigint");
+
+                    b.HasIndex("UserGarageId");
+
                     b.ToTable("Trailers");
                 });
 
@@ -366,6 +371,10 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                         .HasForeignKey("TaranSoft.MyGarage.Data.Models.EF.Vehicles.Trailer", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("TaranSoft.MyGarage.Data.Models.EF.UserGarage", null)
+                        .WithMany("Trailers")
+                        .HasForeignKey("UserGarageId");
                 });
 
             modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.UserGarage", b =>
@@ -373,6 +382,8 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                     b.Navigation("Cars");
 
                     b.Navigation("Motorcycles");
+
+                    b.Navigation("Trailers");
 
                     b.Navigation("Vehicles");
                 });
