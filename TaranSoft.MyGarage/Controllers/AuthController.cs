@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaranSoft.MyGarage.Contracts;
+using TaranSoft.MyGarage.Contracts.Dto;
 using TaranSoft.MyGarage.Contracts.Request;
 using TaranSoft.MyGarage.Repository.Interfaces;
 using TaranSoft.MyGarage.Services.Interfaces;
@@ -53,7 +53,7 @@ public class AuthController : AuthorizedApiController
     {
         try
         {
-            await _usersService.Register(new UserDto 
+            await _usersService.Register(new UserDto
             {
                 Email = request.Email,
                 Password = request.Password,

@@ -1,18 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaranSoft.MyGarage.Data.Models.EF.CarJournal
 {
     [Table("JournalRecords")]
-    public class JournalRecord : BaseEntity
+    public class JournalRecord : BaseAuditableEntity
     {
         [Required]
-        [ForeignKey(nameof(CarJournal.Id))]
-        public Guid JournalId { get; set; }
+        public long JournalId { get; set; }
+
+        public Journal Journal { get; set; }  // Navigation to Journal
+
+        public DateTime EntryDate { get; set; }
+        public string Title { get; set; }     // e.g., "Oil Change", "New Tires"
+        public string Description { get; set; }  // Detailed notes
+
+        [Column(TypeName = "decimal(18,4)")]
+        public decimal? Cost { get; set; }    // Optional cost of the work
+        public int? Mileage { get; set; }     // Optional mileage at time of entry
     }
 }

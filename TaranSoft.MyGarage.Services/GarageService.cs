@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TaranSoft.MyGarage.Contracts;
+using TaranSoft.MyGarage.Contracts.Dto;
 using TaranSoft.MyGarage.Repository.Interfaces;
 using TaranSoft.MyGarage.Services.Interfaces;
 

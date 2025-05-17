@@ -1,4 +1,5 @@
-﻿using TaranSoft.MyGarage.Contracts;
+﻿using TaranSoft.MyGarage.Contracts.Dto;
+
 namespace TaranSoft.MyGarage.Services.Interfaces;
 
 public interface IGarageService

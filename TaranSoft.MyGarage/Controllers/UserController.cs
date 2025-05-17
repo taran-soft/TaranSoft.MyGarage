@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaranSoft.MyGarage.Contracts;
+using TaranSoft.MyGarage.Contracts.Dto;
 using TaranSoft.MyGarage.Contracts.Request;
 using TaranSoft.MyGarage.Controllers.Request;
 using TaranSoft.MyGarage.Services.Interfaces;
@@ -33,9 +34,8 @@ public class UserController : ControllerBase
         var user = await _usersService.GetUserById(id);
         var cars = await _carsService.GetByUserId(id);
 
-        return Ok(new UserGarageDto
+        return Ok(new GarageDto
         {
-            UserData = user,
             Cars = cars
         });
     }
@@ -51,9 +51,8 @@ public class UserController : ControllerBase
 
         var cars = await _carsService.GetByUserId(Guid.NewGuid());
 
-        return Ok(new UserGarageDto
+        return Ok(new GarageDto
         {
-            UserData = user,
             Cars = cars
         });
     }

@@ -1,6 +1,6 @@
-﻿namespace TaranSoft.MyGarage.Contracts.VehicleDto
+﻿namespace TaranSoft.MyGarage.Contracts.Dto.Vehicle
 {
-    public class VehicleDto : BaseEntityDto
+    public class VehicleDto : BaseAuditableEntityDto
     {
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

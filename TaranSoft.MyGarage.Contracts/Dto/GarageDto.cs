@@ -1,8 +1,8 @@
-﻿using TaranSoft.MyGarage.Contracts.VehicleDto;
+﻿using TaranSoft.MyGarage.Contracts.Dto.Vehicle;
 
-namespace TaranSoft.MyGarage.Contracts
+namespace TaranSoft.MyGarage.Contracts.Dto
 {
-    public class GarageDto : BaseEntityDto
+    public class GarageDto : BaseAuditableEntityDto
     {
         public UserDto Owner { get; set; }
 

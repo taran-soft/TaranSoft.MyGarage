@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaranSoft.MyGarage.Contracts;
 using TaranSoft.MyGarage.Contracts.Common;
+using TaranSoft.MyGarage.Contracts.Dto;
 using TaranSoft.MyGarage.Services.Interfaces;
 
 namespace MyGarage.Controllers;

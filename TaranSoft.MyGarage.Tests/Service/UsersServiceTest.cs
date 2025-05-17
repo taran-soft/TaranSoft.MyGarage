@@ -13,6 +13,7 @@ using TaranSoft.MyGarage.Services;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using TaranSoft.MyGarage.Data.Models.MongoDB;
+using TaranSoft.MyGarage.Contracts.Dto;
 
 namespace TaranSoft.MyGarage.Tests.Service;
 

@@ -22,6 +22,85 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.CarJournal.Journal", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("VehicleId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("VehicleId")
+                        .IsUnique();
+
+                    b.ToTable("Journals");
+                });
+
+            modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.CarJournal.JournalRecord", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal?>("Cost")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("JournalId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("Mileage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JournalId");
+
+                    b.ToTable("JournalRecords");
+                });
+
             modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.Country", b =>
                 {
                     b.Property<int>("Id")
@@ -294,6 +373,36 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                     b.ToTable("Trailers");
                 });
 
+            modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.CarJournal.Journal", b =>
+                {
+                    b.HasOne("TaranSoft.MyGarage.Data.Models.EF.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TaranSoft.MyGarage.Data.Models.EF.Vehicles.Vehicle", "Vehicle")
+                        .WithOne("Journal")
+                        .HasForeignKey("TaranSoft.MyGarage.Data.Models.EF.CarJournal.Journal", "VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.CarJournal.JournalRecord", b =>
+                {
+                    b.HasOne("TaranSoft.MyGarage.Data.Models.EF.CarJournal.Journal", "Journal")
+                        .WithMany("JournalRecords")
+                        .HasForeignKey("JournalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Journal");
+                });
+
             modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.Manufacturer", b =>
                 {
                     b.HasOne("TaranSoft.MyGarage.Data.Models.EF.Country", "ManufacturerCountry")
@@ -374,6 +483,11 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                         .HasForeignKey("UserGarageId");
                 });
 
+            modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.CarJournal.Journal", b =>
+                {
+                    b.Navigation("JournalRecords");
+                });
+
             modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.UserGarage", b =>
                 {
                     b.Navigation("Cars");
@@ -383,6 +497,12 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                     b.Navigation("Trailers");
 
                     b.Navigation("Vehicles");
+                });
+
+            modelBuilder.Entity("TaranSoft.MyGarage.Data.Models.EF.Vehicles.Vehicle", b =>
+                {
+                    b.Navigation("Journal")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
