@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TaranSoft.MyGarage.Data.Models.EF.CarJournal;
 
 namespace TaranSoft.MyGarage.Data.Models.EF.Vehicles
 {
@@ -22,5 +23,7 @@ namespace TaranSoft.MyGarage.Data.Models.EF.Vehicles
         // Foreign key
         public long ManufacturerId { get; set; }
         public Manufacturer Manufacturer { get; set; }
+
+        public Journal Journal { get; set; }
     }
 }

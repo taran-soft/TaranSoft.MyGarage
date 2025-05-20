@@ -1,4 +1,4 @@
-﻿namespace TaranSoft.MyGarage.Contracts.VehicleDto
+﻿namespace TaranSoft.MyGarage.Contracts.Dto.Vehicle
 {
     public class MotocycleDto : MotorVehicleDto
     {

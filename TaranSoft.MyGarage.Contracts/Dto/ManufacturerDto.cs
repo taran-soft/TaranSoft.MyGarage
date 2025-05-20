@@ -1,4 +1,4 @@
-﻿namespace TaranSoft.MyGarage.Contracts
+﻿namespace TaranSoft.MyGarage.Contracts.Dto
 {
     public class ManufacturerDto
     {

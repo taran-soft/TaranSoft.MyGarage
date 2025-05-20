@@ -157,6 +157,35 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Journals",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VehicleId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedById = table.Column<long>(type: "bigint", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Journals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Journals_Users_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Journals_Vehicle_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicle",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Motorcycles",
                 columns: table => new
                 {
@@ -213,10 +242,52 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "JournalRecords",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    JournalId = table.Column<long>(type: "bigint", nullable: false),
+                    EntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cost = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
+                    Mileage = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JournalRecords", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JournalRecords_Journals_JournalId",
+                        column: x => x.JournalId,
+                        principalTable: "Journals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Cars_UserGarageId",
                 table: "Cars",
                 column: "UserGarageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JournalRecords_JournalId",
+                table: "JournalRecords",
+                column: "JournalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Journals_CreatedById",
+                table: "Journals",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Journals_VehicleId",
+                table: "Journals",
+                column: "VehicleId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Manufacturers_ManufacturerCountryId",
@@ -256,10 +327,16 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework.Migrations
                 name: "Cars");
 
             migrationBuilder.DropTable(
+                name: "JournalRecords");
+
+            migrationBuilder.DropTable(
                 name: "Motorcycles");
 
             migrationBuilder.DropTable(
                 name: "Trailers");
+
+            migrationBuilder.DropTable(
+                name: "Journals");
 
             migrationBuilder.DropTable(
                 name: "Vehicle");

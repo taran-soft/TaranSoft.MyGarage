@@ -1,6 +1,6 @@
-﻿namespace TaranSoft.MyGarage.Contracts
+﻿namespace TaranSoft.MyGarage.Contracts.Dto
 {
-    public class UserDto : BaseEntityDto
+    public class UserDto : BaseAuditableEntityDto
     {
         public string Email { get; set; }
         public string Name { get; set; }
