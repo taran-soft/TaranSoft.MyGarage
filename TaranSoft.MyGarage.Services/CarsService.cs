@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using TaranSoft.MyGarage.Contracts.Dto.Vehicle;
 using TaranSoft.MyGarage.Data.Models.EF.Vehicles;
-using TaranSoft.MyGarage.Repository.Interfaces;
+using TaranSoft.MyGarage.Repository.Interfaces.EF;
 using TaranSoft.MyGarage.Services.Interfaces;
 
 namespace TaranSoft.MyGarage.Services
@@ -38,7 +38,7 @@ namespace TaranSoft.MyGarage.Services
 
         public async Task<IList<CarDto>> Search(int take, int skip)
         {
-            var carsList = await _carsRepository.Search(take, skip);
+            var carsList = await _carsRepository.SearchAsync(take, skip);
 
             return _mapper.Map<IList<CarDto>>(carsList);
         }

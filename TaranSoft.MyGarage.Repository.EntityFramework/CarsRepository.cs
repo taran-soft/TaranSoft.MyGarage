@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TaranSoft.MyGarage.Repository.Interfaces;
+using TaranSoft.MyGarage.Repository.Interfaces.EF;
 using Car = TaranSoft.MyGarage.Data.Models.EF.Vehicles.Car;
 
 namespace TaranSoft.MyGarage.Repository.EntityFramework;
@@ -10,73 +10,70 @@ public class CarsRepository : BaseRepository<Car>, IEFCarsRepository
 
     public CarsRepository(MainDbContext context) : base(context)
     {
-        _context = context;
+        _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
     public async Task<Car> CreateAsync(Car car)
     {
-        throw new NotImplementedException();
-        //_context.Cars.Add(car);
-        //await _context.SaveChangesAsync();
-        //return car;
+        if (car == null)
+            throw new ArgumentNullException(nameof(car));
+
+        _context.Cars.Add(car);
+        await _context.SaveChangesAsync();
+        return car;
     }
 
-    // ✅ Read (Get all cars)
-    public async Task<List<Car>> ListAllAsync()
+    public async Task<IList<Car>> ListAllAsync()
     {
-        throw new NotImplementedException();
-        //return await _context.Cars
-        //    .Include(c => c.Manufacturer)
-        //    .ToListAsync();
+        return await _context.Cars
+            .Include(c => c.Manufacturer)
+            .ToListAsync();
     }
 
-    // ✅ Read (Get single car by ID)
-    public async Task<Car?> GetByIdAsync(Guid id)
+    public async Task<Car?> GetByIdAsync(long id)
     {
-        throw new NotImplementedException();
-    //    return await _context.Cars
-    //        .Include(c => c.Manufacturer)
-    //        .FirstOrDefaultAsync(c => c.Id == id);
+        return await _context.Cars
+            .Include(c => c.Manufacturer)
+            .FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    // ✅ Update
     public async Task<bool> UpdateAsync(Car updatedCar)
     {
-        throw new NotImplementedException();
-        //var existingCar = await _context.Cars.FindAsync(updatedCar.Id);
+        if (updatedCar == null)
+            throw new ArgumentNullException(nameof(updatedCar));
 
-        //if (existingCar == null)
-        //    return false;
+        var existingCar = await _context.Cars.FindAsync(updatedCar.Id);
+        if (existingCar == null)
+            return false;
 
-        //existingCar.Name = updatedCar.Name;
-        //existingCar.ManufacturerId = updatedCar.ManufacturerId;
-
-        //await _context.SaveChangesAsync();
-        //return true;
+        _context.Entry(existingCar).CurrentValues.SetValues(updatedCar);
+        await _context.SaveChangesAsync();
+        return true;
     }
 
-    // ✅ Delete
     public async Task<bool> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
-        //var car = await _context.Cars.FindAsync(id);
-        //if (car == null)
-        //    return false;
+        var car = await _context.Cars.FindAsync(id);
+        if (car == null)
+            return false;
 
-        //_context.Cars.Remove(car);
-        //await _context.SaveChangesAsync();
-        //return true;
+        _context.Cars.Remove(car);
+        await _context.SaveChangesAsync();
+        return true;
     }
 
-    public async Task<IList<Car>> Search(int take, int skip)
+    public async Task<IList<Car>> SearchAsync(int take, int skip)
     {
-        throw new NotImplementedException();
-        //return await _context.Cars
-        //.Include(c => c.Manufacturer)
-        //.OrderBy(c => c.Name) // Optional: Sort by Name
-        //.Skip(skip)
-        //.Take(take)
-        //.ToListAsync();
+        return await _context.Cars
+            .Include(c => c.Manufacturer)
+            .OrderBy(c => c.Name)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
     }
-   
+
+    public async Task<int> GetTotalCountAsync()
+    {
+        return await _context.Cars.CountAsync();
+    }
 }
