@@ -14,6 +14,7 @@ using TaranSoft.MyGarage.Data.Models.MongoDB;
 using TaranSoft.MyGarage.Repository.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using TaranSoft.MyGarage;
+using TaranSoft.MyGarage.Repository.Interfaces.EF;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,7 @@ builder.Services.AddTransient<IIdGenerator, CustomIdGenerator>();
 //builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<ICarsService, CarsService>();
 builder.Services.AddScoped<IGarageService, GarageService>();
+builder.Services.AddScoped<IJournalsService, JournalsService>();
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -122,8 +124,9 @@ static void UseMsSQL(WebApplicationBuilder builder)
     builder.Services.AddDbContext<MainDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-    builder.Services.AddScoped<IEFCarsRepository, TaranSoft.MyGarage.Repository.EntityFramework.CarsRepository>();
-    builder.Services.AddScoped<IEFGaragesRepository, TaranSoft.MyGarage.Repository.EntityFramework.GaragesRepository>();
+    builder.Services.AddScoped<IEFCarsRepository, CarsRepository>();
+    builder.Services.AddScoped<IEFGaragesRepository, GaragesRepository>();
+    builder.Services.AddScoped<IEFJournalsRepository, JournalsRepository>();
     //builder.Services.AddScoped<IUserRepository, TaranSoft.MyGarage.Repository.EntityFramework.UserRepository>();
     
 }

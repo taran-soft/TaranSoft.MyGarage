@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using TaranSoft.MyGarage.Contracts.Dto;
-using TaranSoft.MyGarage.Repository.Interfaces;
+using TaranSoft.MyGarage.Repository.Interfaces.EF;
 using TaranSoft.MyGarage.Services.Interfaces;
 
 namespace TaranSoft.MyGarage.Services
@@ -20,6 +20,17 @@ namespace TaranSoft.MyGarage.Services
             var result = await _repository.Search(take, skip);
 
             return _mapper.Map<IList<GarageDto>>(result);
+        }
+
+        public async Task<GarageDto?> GetGarageByOwner(long ownerId)
+        {
+            var result = await _repository.GetByUserId(ownerId);
+            if (result == null) 
+            {
+                return null;
+            }
+
+            return _mapper.Map<GarageDto>(result);
         }
     }
 }

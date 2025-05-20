@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TaranSoft.MyGarage.Repository.Interfaces;
+using TaranSoft.MyGarage.Repository.Interfaces.EF;
 using UserGarage = TaranSoft.MyGarage.Data.Models.EF.UserGarage;
 
 namespace TaranSoft.MyGarage.Repository.EntityFramework;
@@ -12,7 +12,12 @@ public class GaragesRepository : BaseRepository<UserGarage>, IEFGaragesRepositor
     {
         _context = context;
     }
-        
+
+    public async Task<UserGarage?> GetByUserId(long userId)
+    {
+        return await _context.Garages.FirstOrDefaultAsync(x => x.OwnerId == userId);
+    }
+
 
     // ✅ Read (Get all cars)
     public async Task<List<UserGarage>> ListAllAsync()

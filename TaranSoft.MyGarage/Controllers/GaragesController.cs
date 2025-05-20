@@ -19,6 +19,7 @@ public class GaragesController : AuthorizedApiController
     }
 
     [HttpGet]
+    [Route("search")]
     public async Task<IActionResult> Get([FromQuery] SearchOptions options)
     {
         var items = await _service.Search(options.Take, options.Skip);
@@ -29,5 +30,26 @@ public class GaragesController : AuthorizedApiController
             Total = items.Count
         });
         
+    }
+
+    [HttpGet]
+    [Route("getbyowner")]
+    public async Task<IActionResult> GetByOwner([FromQuery] long ownerId)
+    {
+        try
+        {
+            var garage = await _service.GetGarageByOwner(ownerId);
+            if (garage == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(garage);
+        }
+        catch (Exception ex) 
+        {
+            // TODO Log exception
+            return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request."); ;
+        }
     }
 }
