@@ -38,9 +38,3 @@ public class User
     
     public AddressInfo Address { get; set; }
 }
-
-public enum GenderEnum
-{
-    Male,
-    Female
-}

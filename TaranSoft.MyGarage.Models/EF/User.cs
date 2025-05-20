@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TaranSoft.MyGarage.Data.Models.MongoDB;
 
 namespace TaranSoft.MyGarage.Data.Models.EF
 {
@@ -30,6 +29,9 @@ namespace TaranSoft.MyGarage.Data.Models.EF
 
         public int DriverExperience { get; set; }
 
-        public GenderEnum Gender { get; set; }
+        public TaranSoft.MyGarage.Data.Models.GenderEnum Gender { get; set; }
+
+        // Navigation property for the user's garage
+        public virtual UserGarage? Garage { get; set; }
     }
 }

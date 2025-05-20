@@ -17,14 +17,14 @@ namespace TaranSoft.MyGarage.Services
 
         public async Task<IList<GarageDto>> Search(int take, int skip)
         {
-            var result = await _repository.Search(take, skip);
+            var result = await _repository.SearchAsync(take, skip);
 
             return _mapper.Map<IList<GarageDto>>(result);
         }
 
         public async Task<GarageDto?> GetGarageByOwner(long ownerId)
         {
-            var result = await _repository.GetByUserId(ownerId);
+            var result = await _repository.GetByOwnerIdAsync(ownerId);
             if (result == null) 
             {
                 return null;
