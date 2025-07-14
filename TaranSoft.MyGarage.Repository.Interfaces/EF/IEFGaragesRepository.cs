@@ -28,6 +28,13 @@ public interface IEFGaragesRepository
     Task<IList<UserGarage>> ListAllAsync();
 
     /// <summary>
+    /// Retrieves a user garage by its unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user garage.</param>
+    /// <returns>The user garage if found; otherwise, null.</returns>
+    Task<UserGarage?> GetByIdAsync(long id);
+
+    /// <summary>
     /// Retrieves a user garage by user ID.
     /// </summary>
     /// <param name="ownerId">The ID of the user.</param>

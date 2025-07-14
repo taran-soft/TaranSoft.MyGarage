@@ -49,6 +49,19 @@ public class GaragesRepository : BaseRepository<UserGarage>, IEFGaragesRepositor
             .ToListAsync();
     }
 
+    public async Task<UserGarage?> GetByIdAsync(long id)
+    {
+        return await _context.Garages
+            .Include(g => g.Cars)
+                .ThenInclude(c => c.Manufacturer)
+            .Include(g => g.Motorcycles)
+                .ThenInclude(m => m.Manufacturer)
+            .Include(g => g.Trailers)
+                .ThenInclude(m => m.Manufacturer)
+            .Include(g => g.Owner)
+            .FirstOrDefaultAsync(g => g.Id == id);
+    }
+
     public async Task<UserGarage?> GetByOwnerIdAsync(long ownerId)
     {
         return await _context.Garages
