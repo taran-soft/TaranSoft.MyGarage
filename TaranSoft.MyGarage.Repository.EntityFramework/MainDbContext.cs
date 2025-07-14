@@ -25,6 +25,13 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework
         {
             base.OnModelCreating(modelBuilder);
 
+            // Configure User-Garage relationship
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Garage)
+                .WithOne(g => g.Owner)
+                .HasForeignKey<UserGarage>(g => g.OwnerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Vehicle>()
                 .HasOne(c => c.Garage)
                 .WithMany(common => common.Vehicles)
@@ -47,9 +54,6 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework
                 .Property(m => m.ManufacturerName)
                 .HasConversion<string>();
 
-            modelBuilder.Entity<UserGarage>()
-                .HasOne(g => g.Owner);
-
             modelBuilder.Entity<Journal>()
                 .HasOne(j => j.Vehicle)
                 .WithOne(v => v.Journal)
@@ -61,7 +65,6 @@ namespace TaranSoft.MyGarage.Repository.EntityFramework
 
             modelBuilder.Entity<JournalRecord>()
                 .HasOne(c => c.Journal);
-
         }
     }
 }

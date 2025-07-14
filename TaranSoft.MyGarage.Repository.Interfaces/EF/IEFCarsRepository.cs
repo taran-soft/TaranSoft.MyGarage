@@ -53,5 +53,5 @@ public interface IEFCarsRepository
     /// </summary>
     /// <param name="id">The unique identifier of the car to delete.</param>
     /// <returns>True if the deletion was successful; otherwise, false.</returns>
-    Task<bool> DeleteAsync(Guid id);
+    Task<bool> DeleteAsync(long id);
 }

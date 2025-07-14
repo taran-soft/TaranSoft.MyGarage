@@ -2,6 +2,7 @@
 using TaranSoft.MyGarage.Data.Models.EF;
 using TaranSoft.MyGarage.Repository.EntityFramework;
 using TaranSoft.MyGarage.Data.Models.EF.CarJournal;
+using TaranSoft.MyGarage.Data.Models;
 
 namespace TaranSoft.MyGarage
 {
@@ -25,8 +26,8 @@ namespace TaranSoft.MyGarage
             var manufacturerLev = new Manufacturer { ManufacturerCountry = country2, ManufacturerName = ManufacturerEnum.Kawasaki, YearCreation = 1950 };
 
             //Create Users
-            var user1 = new TaranSoft.MyGarage.Data.Models.EF.User { Name = "Vladyslav", Surname = "Tar", Nickname = "Vynd", DriverExperience = 10, Email = "vlad@gmail.com", Phone = "1234567890", Gender = TaranSoft.MyGarage.Data.Models.MongoDB.GenderEnum.Male, CreatedAt = DateTime.UtcNow };
-            var user2 = new TaranSoft.MyGarage.Data.Models.EF.User { Name = "Serg", Surname = "Postkevich", Nickname = "Geek", DriverExperience = 6, Email = "geek@gmail.com", Phone = "123654787", Gender = TaranSoft.MyGarage.Data.Models.MongoDB.GenderEnum.Male, CreatedAt = DateTime.UtcNow };
+            var user1 = new TaranSoft.MyGarage.Data.Models.EF.User { Name = "Vladyslav", Surname = "Tar", Nickname = "Vynd", DriverExperience = 10, Email = "vlad@gmail.com", Phone = "1234567890", Gender = GenderEnum.Male, CreatedAt = DateTime.UtcNow };
+            var user2 = new TaranSoft.MyGarage.Data.Models.EF.User { Name = "Serg", Surname = "Postkevich", Nickname = "Geek", DriverExperience = 6, Email = "geek@gmail.com", Phone = "123654787", Gender = GenderEnum.Male, CreatedAt = DateTime.UtcNow };
 
 
             // Create a Common entity

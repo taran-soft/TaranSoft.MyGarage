@@ -51,7 +51,7 @@ public class CarsRepository : BaseRepository<Car>, IEFCarsRepository
         return true;
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(long id)
     {
         var car = await _context.Cars.FindAsync(id);
         if (car == null)
