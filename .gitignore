@@ -4,7 +4,13 @@
 /TaranSoft.MyGarage/obj
 /TaranSoft.MyGarage.*/bin
 /TaranSoft.MyGarage.*/obj
-/TaranSoft.MyGarage.Tests/bin
-/TaranSoft.MyGarage.Tests/obj
+/Tests/bin
+/Tests/obj
 /.vs
 /obj
+
+# Ignore all bin and obj folders in any Tests directory
+Tests/TaranSoft.MyGarage.UnitTests/bin/
+Tests/TaranSoft.MyGarage.UnitTests/obj/
+Tests/TaranSoft.MyGarage.IntegrationTests/bin/
+Tests/TaranSoft.MyGarage.IntegrationTests/obj/

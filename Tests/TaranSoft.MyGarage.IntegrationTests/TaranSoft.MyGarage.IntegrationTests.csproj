@@ -30,9 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TaranSoft.MyGarage.Repository.EntityFramework\TaranSoft.MyGarage.Repository.EntityFramework.csproj" />
-    <ProjectReference Include="..\TaranSoft.MyGarage.Repository.MongoDB\TaranSoft.MyGarage.Repository.MongoDB.csproj" />
-    <ProjectReference Include="..\TaranSoft.MyGarage.Models\TaranSoft.MyGarage.Data.Models.csproj" />
+    <ProjectReference Include="..\..\TaranSoft.MyGarage.Repository.EntityFramework\TaranSoft.MyGarage.Repository.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\TaranSoft.MyGarage.Repository.MongoDB\TaranSoft.MyGarage.Repository.MongoDB.csproj" />
+    <ProjectReference Include="..\..\TaranSoft.MyGarage.Models\TaranSoft.MyGarage.Data.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
