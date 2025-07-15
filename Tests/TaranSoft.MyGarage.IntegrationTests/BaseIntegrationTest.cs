@@ -19,21 +19,21 @@ public abstract class BaseIntegrationTest : IDisposable
             .AddEnvironmentVariables()
             .Build();
 
-        // Setup in-memory database for testing with unique name
-        var databaseName = $"TestDb_{Guid.NewGuid()}";
+        // Setup SQL Server database for testing
         var options = new DbContextOptionsBuilder<MainDbContext>()
-            .UseInMemoryDatabase(databaseName: databaseName)
+            .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             .Options;
 
         DbContext = new MainDbContext(options);
         
         // Ensure database is created
-        DbContext.Database.EnsureCreated();
+        //DbContext.Database.EnsureCreated();
     }
 
     protected async Task CleanupDatabase()
     {
         // Remove all data from all tables
+        DbContext.Countries.RemoveRange(DbContext.Countries);
         DbContext.Journals.RemoveRange(DbContext.Journals);
         DbContext.JournalRecords.RemoveRange(DbContext.JournalRecords);
         DbContext.Cars.RemoveRange(DbContext.Cars);
@@ -46,7 +46,7 @@ public abstract class BaseIntegrationTest : IDisposable
 
     public void Dispose()
     {
-        DbContext.Database.EnsureDeleted();
+        //DbContext.Database.EnsureDeleted();
         DbContext.Dispose();
     }
 } 

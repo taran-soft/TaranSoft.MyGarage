@@ -7,12 +7,15 @@ using Xunit;
 
 namespace TaranSoft.MyGarage.IntegrationTests.Repository;
 
+[Collection("IntegrationTests Collection")]
 public class JournalsRepositoryIntegrationTests : BaseIntegrationTest
 {
     private readonly JournalsRepository _repository;
+    private readonly DatabaseFixture _fixture;
 
-    public JournalsRepositoryIntegrationTests()
+    public JournalsRepositoryIntegrationTests(DatabaseFixture fixture)
     {
+        _fixture = fixture;
         _repository = new JournalsRepository(DbContext);
     }
 
@@ -27,10 +30,15 @@ public class JournalsRepositoryIntegrationTests : BaseIntegrationTest
         DbContext.Users.Add(user);
         await DbContext.SaveChangesAsync();
 
+        var country = new Country { Name = "Ukraine", CountryCode = "UA" };
+        DbContext.Countries.Add(country);
+        await DbContext.SaveChangesAsync();
+
         var manufacturer = new Manufacturer
         {
             ManufacturerName = ManufacturerEnum.Toyota,
-            YearCreation = 1937
+            YearCreation = 1937,
+            ManufacturerCountryId = country.Id
         };
         DbContext.Manufacturers.Add(manufacturer);
         await DbContext.SaveChangesAsync();
@@ -72,10 +80,15 @@ public class JournalsRepositoryIntegrationTests : BaseIntegrationTest
         DbContext.Users.AddRange(user1, user2);
         await DbContext.SaveChangesAsync();
 
+        var country = new Country { Name = "United States", CountryCode = "USA" };
+        DbContext.Countries.Add(country);
+        await DbContext.SaveChangesAsync();
+
         var manufacturer = new Manufacturer
         {
             ManufacturerName = ManufacturerEnum.Toyota,
-            YearCreation = 1937
+            YearCreation = 1937,
+            ManufacturerCountryId = country.Id
         };
         DbContext.Manufacturers.Add(manufacturer);
         await DbContext.SaveChangesAsync();
@@ -207,6 +220,9 @@ public class JournalsRepositoryIntegrationTests : BaseIntegrationTest
     public async Task SearchAsync_WithPagination_ReturnsCorrectJournals()
     {
         // Arrange
+        // Verify database is clean
+        await _fixture.CleanupDatabase();
+
         var (user1, user2, manufacturer, garage1, garage2, car1, car2) = await SetupMultipleTestData();
         var journals = new List<Journal>
         {
@@ -229,6 +245,9 @@ public class JournalsRepositoryIntegrationTests : BaseIntegrationTest
     public async Task GetTotalCountAsync_ReturnsCorrectCount()
     {
         // Arrange
+        // Verify database is clean
+        await _fixture.CleanupDatabase();
+
         var (user1, user2, manufacturer, garage1, garage2, car1, car2) = await SetupMultipleTestData();
         var journals = new List<Journal>
         {
