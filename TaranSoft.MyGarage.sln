@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaranSoft.MyGarage", "src\TaranSoft.MyGarage\TaranSoft.MyGarage.csproj", "{B6D32B7E-A70B-4A94-AA70-2A7D1C876DC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaranSoft.MyGarage.API", "src\TaranSoft.MyGarage.API\TaranSoft.MyGarage.API.csproj", "{B6D32B7E-A70B-4A94-AA70-2A7D1C876DC5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaranSoft.MyGarage.Repository.Interfaces", "src\TaranSoft.MyGarage.Repository.Interfaces\TaranSoft.MyGarage.Repository.Interfaces.csproj", "{355EA7E4-EF3F-9202-EEB5-3342B802DD21}"
 EndProject

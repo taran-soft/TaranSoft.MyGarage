@@ -21,7 +21,7 @@
     <ProjectReference Include="..\..\src\TaranSoft.MyGarage.Models\TaranSoft.MyGarage.Data.Models.csproj" />
     <ProjectReference Include="..\..\src\TaranSoft.MyGarage.Repository.EntityFramework\TaranSoft.MyGarage.Repository.EntityFramework.csproj" />
     <ProjectReference Include="..\..\src\TaranSoft.MyGarage.Repository.Interfaces\TaranSoft.MyGarage.Repository.Interfaces.csproj" />
-    <ProjectReference Include="..\..\src\TaranSoft.MyGarage\TaranSoft.MyGarage.csproj" />
+    <ProjectReference Include="..\..\src\TaranSoft.MyGarage\TaranSoft.MyGarage.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>
