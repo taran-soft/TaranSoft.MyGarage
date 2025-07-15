@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using TaranSoft.MyGarage.Data.Models.EF;
+﻿using TaranSoft.MyGarage.Data.Models.EF;
 
 namespace TaranSoft.MyGarage.Data.Models.MongoDB
 {

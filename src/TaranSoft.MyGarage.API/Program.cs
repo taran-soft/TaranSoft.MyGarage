@@ -7,14 +7,15 @@ using Microsoft.OpenApi.Models;
 using MyGarage.Common;
 using TaranSoft.MyGarage.Services.Interfaces;
 using TaranSoft.MyGarage.Services;
-using TaranSoft.MyGarage.Repository.Interfaces;
 using TaranSoft.MyGarage.Contracts;
-using TaranSoft.MyGarage.Repository.MongoDB.DbContext;
 using TaranSoft.MyGarage.Data.Models.MongoDB;
 using TaranSoft.MyGarage.Repository.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using TaranSoft.MyGarage;
 using TaranSoft.MyGarage.Repository.Interfaces.EF;
+using TaranSoft.MyGarage.Repository.Interfaces.MongoDB;
+using TaranSoft.MyGarage.Repository.MongoDB;
+using TaranSoft.MyGarage.Repository.MongoDB.DbContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -115,8 +116,8 @@ static void UseMongoDB(WebApplicationBuilder builder)
     builder.Services.Configure<Settings>(builder.Configuration.GetSection("MongoDB"));
     builder.Services.AddSingleton<IMongoDbContext, MongoDbContext>();
 
-    builder.Services.AddScoped<ICarsRepository, TaranSoft.MyGarage.Repository.MongoDB.CarsRepository>();
-    builder.Services.AddScoped<IUserRepository, TaranSoft.MyGarage.Repository.MongoDB.UserRepository>();
+    builder.Services.AddScoped<IMongoDbCarsRepository, TaranSoft.MyGarage.Repository.MongoDB.CarsRepository>();
+    builder.Services.AddScoped<IMongoDbUserRepository, TaranSoft.MyGarage.Repository.MongoDB.UserRepository>();
 }
 
 static void UseMsSQL(WebApplicationBuilder builder)
@@ -124,7 +125,7 @@ static void UseMsSQL(WebApplicationBuilder builder)
     builder.Services.AddDbContext<MainDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-    builder.Services.AddScoped<IEFCarsRepository, CarsRepository>();
+    builder.Services.AddScoped<IEFCarsRepository, TaranSoft.MyGarage.Repository.EntityFramework.CarsRepository>();
     builder.Services.AddScoped<IEFGaragesRepository, GaragesRepository>();
     builder.Services.AddScoped<IEFJournalsRepository, JournalsRepository>();
     //builder.Services.AddScoped<IUserRepository, TaranSoft.MyGarage.Repository.EntityFramework.UserRepository>();

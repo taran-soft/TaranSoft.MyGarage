@@ -1,8 +1,8 @@
 ﻿using TaranSoft.MyGarage.Data.Models.MongoDB;
 
-namespace TaranSoft.MyGarage.Repository.Interfaces;
+namespace TaranSoft.MyGarage.Repository.Interfaces.MongoDB;
 
-public interface IUserRepository
+public interface IMongoDbUserRepository
 {
     Task<List<User>> ListAll();
     Task<User> GetById(long id);
