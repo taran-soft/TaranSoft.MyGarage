@@ -2,9 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Moq;
-using NUnit.Framework;
-using Rhino.Mocks;
+using Xunit;
 using MyGarage.Tests;
 using TaranSoft.MyGarage.Services.Interfaces;
 using TaranSoft.MyGarage.Repository.Interfaces;
@@ -14,35 +12,31 @@ using Microsoft.Extensions.Logging;
 using AutoMapper;
 using TaranSoft.MyGarage.Data.Models.MongoDB;
 using TaranSoft.MyGarage.Contracts.Dto;
+using NSubstitute;
 
-namespace TaranSoft.MyGarage.Tests.Service;
+namespace TaranSoft.MyGarage.UnitTests.Service;
 
-[TestFixture]
 public class UsersServiceTest
 {
-    private Mock<IUserRepository> _userRepositoryMock;
+    private IUserRepository _userRepositoryMock;
     private IUsersService _usersService;
-    private Mock<IPasswordHasher<Services.Models.User>> _passwordHasherMock;
-    private Mock<IIdGenerator> _idGeneratorMock;
-    private Mock<IOptions<AppSettings>> _appSettings;
-    private Mock<ILogger<UsersService>> _usersServiceLoggerMock;
-    private Mock<IMapper> _mapperMock;
+    private IPasswordHasher<Services.Models.User> _passwordHasherMock;
+    private IOptions<AppSettings> _appSettings;
+    private ILogger<UsersService> _usersServiceLoggerMock;
+    private IMapper _mapperMock;
 
-    [SetUp]
-    public void Setup()
+    public UsersServiceTest()
     {
-        _userRepositoryMock = new Mock<IUserRepository>();
-        _appSettings = new Mock<IOptions<AppSettings>>();
-        _passwordHasherMock = new Mock<IPasswordHasher<Services.Models.User>>();
-        _idGeneratorMock = new Mock<IIdGenerator>();
-        _usersServiceLoggerMock = new Mock<ILogger<UsersService>>();
-        _mapperMock = new Mock<IMapper>();
+        _userRepositoryMock = Substitute.For<IUserRepository>();
+        _appSettings = Substitute.For<IOptions<AppSettings>>();
+        _passwordHasherMock = Substitute.For<IPasswordHasher<Services.Models.User>>();
+        _usersServiceLoggerMock = Substitute.For<ILogger<UsersService>>();
+        _mapperMock = Substitute.For<IMapper>();
 
-        _usersService = new UsersService(_userRepositoryMock.Object, _appSettings.Object, _passwordHasherMock.Object, _idGeneratorMock.Object, _usersServiceLoggerMock.Object, _mapperMock.Object);
-
+        _usersService = new UsersService(_userRepositoryMock, _appSettings, _passwordHasherMock, _usersServiceLoggerMock, _mapperMock);
     }
 
-    [Test]
+    [Fact]
     public async Task TryToRegisterUser_Success()
     {
         //Given 
@@ -54,13 +48,10 @@ public class UsersServiceTest
             Password = "mygaragepassword1!"
         };
 
-        var expectedId = 1.ToGuid();
-        _idGeneratorMock.Setup(x => x.NewGuid()).Returns(expectedId);
-        _userRepositoryMock
-            .Setup(x => x.Create(It.IsAny<User>()))
-            .Returns(Task.FromResult(expectedId));
+        var expectedId = 1L;
+        _userRepositoryMock.Create(Arg.Any<User>()).Returns(Task.FromResult(expectedId));
 
-        _passwordHasherMock.Setup(x => x.HashPassword(Arg<Services.Models.User>.Is.Anything, Arg<string>.Is.Anything)).Returns(string.Empty);
+        _passwordHasherMock.HashPassword(Arg.Any<Services.Models.User>(), Arg.Any<string>()).Returns(string.Empty);
         
         // When
         
@@ -68,11 +59,11 @@ public class UsersServiceTest
         
         //Then
         
-        Assert.AreEqual(expectedId, id);
+        Assert.Equal(expectedId, id);
         
     }
     
-    [Test]
+    [Fact]
     public async Task TryToRegisterUser_Fail_UserExists()
     {
         //Given 
@@ -83,20 +74,17 @@ public class UsersServiceTest
             Password = "mygaragepassword1!"
         };
 
-        var expectedId = 1.ToGuid();
-        _idGeneratorMock.Setup(x => x.NewGuid()).Returns(expectedId);
+        var expectedId = 1L;
         
         // When
         
-        _userRepositoryMock
-            .Setup(x => x.GetByEmail(It.IsAny<string>()))
-            .Returns(Task.FromResult(new User()));
+        _userRepositoryMock.GetByEmail(Arg.Any<string>()).Returns(Task.FromResult(new User()));
         
         //Then
         
-        var ex = Assert.ThrowsAsync<ApplicationException>(() => _usersService.Register(userRequest));
-        Assert.IsNotNull(ex);
-        Assert.That(ex?.Message, Is.EqualTo("User already exists"));
+        var ex = await Assert.ThrowsAsync<ApplicationException>(() => _usersService.Register(userRequest));
+        Assert.NotNull(ex);
+        Assert.Equal("User already exists", ex?.Message);
         
     }
 }

@@ -16,24 +16,26 @@ namespace TaranSoft.MyGarage.Services
             _mapper = mapper;
         }
 
-        public async Task<Guid> Create(CarDto car)
+        public async Task<long> Create(CarDto car)
         {
             var carEntity = _mapper.Map<Car>(car);
 
             var createdEntity = await _carsRepository.CreateAsync(carEntity);
 
-            return Guid.NewGuid();
+            return createdEntity.Id;
 
         }
 
-        public Task Delete(Guid id)
+        public async Task Delete(long id)
         {
-            throw new NotImplementedException();
+            await _carsRepository.DeleteAsync(id);
         }
 
-        public async Task<IList<CarDto>> GetByUserId(Guid id)
+        public async Task<IList<CarDto>> GetByUserId(long id)
         {
-            throw new NotImplementedException();
+            var allCars = await _carsRepository.ListAllAsync();
+            var userCars = allCars.Where(car => car.Garage != null && car.Garage.OwnerId == id).ToList();
+            return _mapper.Map<IList<CarDto>>(userCars);
         }
 
         public async Task<IList<CarDto>> Search(int take, int skip)
@@ -43,9 +45,11 @@ namespace TaranSoft.MyGarage.Services
             return _mapper.Map<IList<CarDto>>(carsList);
         }
 
-        public Task Update(Guid id, CarDto carDto)
+        public async Task Update(long id, CarDto carDto)
         {
-            throw new NotImplementedException();
+            var carEntity = _mapper.Map<Car>(carDto);
+            carEntity.Id = id;
+            await _carsRepository.UpdateAsync(carEntity);
         }
     }
 }

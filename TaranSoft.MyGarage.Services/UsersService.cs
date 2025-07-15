@@ -19,7 +19,6 @@ public class UsersService : IUsersService
     private readonly IUserRepository _userRepository;
     private readonly AppSettings _appSettings;
     private readonly IPasswordHasher<Models.User> _passwordHashService;
-    private readonly IIdGenerator _idGenerator;
     private readonly ILogger<UsersService> _logger;
     private readonly IMapper _mapper;
 
@@ -27,14 +26,12 @@ public class UsersService : IUsersService
         IUserRepository userRepository,
         IOptions<AppSettings> appSettings,
         IPasswordHasher<Models.User> passwordHashService,
-        IIdGenerator idGenerator,
         ILogger<UsersService> logger,
         IMapper mapper
         )
     {
         _userRepository = userRepository;
         _passwordHashService = passwordHashService;
-        _idGenerator = idGenerator;
         _appSettings = appSettings.Value;
         _logger = logger;
         _mapper = mapper;
@@ -75,7 +72,7 @@ public class UsersService : IUsersService
         return tokenHandler.WriteToken(token);
     }
 
-    public async Task<Guid> Register(UserDto userRequest)
+    public async Task<long> Register(UserDto userRequest)
     {
         var userExistsEmailCheck = await CheckUserExists("email", userRequest.Email);
         if (userExistsEmailCheck)
@@ -91,7 +88,6 @@ public class UsersService : IUsersService
 
         var user = new Models.User
         {
-            Id = _idGenerator.NewGuid(),
             Email = userRequest.Email,
             Nickname = userRequest.Nickname,
         };
@@ -102,9 +98,7 @@ public class UsersService : IUsersService
         var hashedUser = _mapper.Map<User>(user);
         try
         {
-            await _userRepository.Create(hashedUser);
-
-            return user.Id;
+            return await _userRepository.Create(hashedUser);
         }
         catch (Exception ex)
         {
@@ -132,7 +126,7 @@ public class UsersService : IUsersService
         }
     }
 
-    public async Task<UserDto> GetUserById(Guid id)
+    public async Task<UserDto> GetUserById(long id)
     {
         var user = await _userRepository.GetById(id);
         return _mapper.Map<UserDto>(user);
@@ -143,7 +137,7 @@ public class UsersService : IUsersService
         throw new NotImplementedException();
     }
 
-    public Task<bool> UpdateUser(Guid id, UserDto user)
+    public Task<bool> UpdateUser(long id, UserDto user)
     {
         throw new NotImplementedException();
     }
