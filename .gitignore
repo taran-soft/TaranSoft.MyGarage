@@ -1,9 +1,9 @@
 ﻿/.idea/.idea.MyGarage/.idea/
 /TaranSoft.MyGarage.sln.DotSettings.user
-/TaranSoft.MyGarage/bin
-/TaranSoft.MyGarage/obj
-/TaranSoft.MyGarage.*/bin
-/TaranSoft.MyGarage.*/obj
+/src/TaranSoft.MyGarage/bin
+/src/TaranSoft.MyGarage/obj
+/src/TaranSoft.MyGarage.*/bin
+/src/TaranSoft.MyGarage.*/obj
 /Tests/bin
 /Tests/obj
 /.vs

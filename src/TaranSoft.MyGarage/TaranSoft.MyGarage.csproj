@@ -24,15 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TaranSoft.MyGarage.Contracts\TaranSoft.MyGarage.Contracts.csproj" />
     <ProjectReference Include="..\TaranSoft.MyGarage.Repository.EntityFramework\TaranSoft.MyGarage.Repository.EntityFramework.csproj" />
-    <ProjectReference Include="..\TaranSoft.MyGarage.Repository.Interfaces\TaranSoft.MyGarage.Repository.Interfaces.csproj" />
     <ProjectReference Include="..\TaranSoft.MyGarage.Repository.MongoDB\TaranSoft.MyGarage.Repository.MongoDB.csproj" />
     <ProjectReference Include="..\TaranSoft.MyGarage.Services.Interfaces\TaranSoft.MyGarage.Services.Interfaces.csproj" />
     <ProjectReference Include="..\TaranSoft.MyGarage.Services\TaranSoft.MyGarage.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>

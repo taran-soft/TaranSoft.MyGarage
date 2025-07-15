@@ -1,8 +1,8 @@
 ﻿using TaranSoft.MyGarage.Data.Models.MongoDB;
 
-namespace TaranSoft.MyGarage.Repository.Interfaces;
+namespace TaranSoft.MyGarage.Repository.Interfaces.MongoDB;
 
-public interface ICarsRepository
+public interface IMongoDbCarsRepository
 {
     Task<IList<Car>> Search(int take, int skip);
     Task<IList<Car>> ListAll();

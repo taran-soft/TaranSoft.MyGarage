@@ -1,12 +1,12 @@
 ﻿using MongoDB.Bson;
-using TaranSoft.MyGarage.Repository.Interfaces;
 using TaranSoft.MyGarage.Repository.MongoDB.DbContext;
 using MongoDB.Driver;
 using TaranSoft.MyGarage.Data.Models.MongoDB;
+using TaranSoft.MyGarage.Repository.Interfaces.MongoDB;
 
 namespace TaranSoft.MyGarage.Repository.MongoDB;
 
-public class CarsRepository : ICarsRepository
+public class CarsRepository : IMongoDbCarsRepository
 {
     private readonly IMongoDbContext _dbContext;
     

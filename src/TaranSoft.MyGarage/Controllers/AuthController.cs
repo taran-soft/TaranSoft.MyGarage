@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaranSoft.MyGarage.Contracts.Dto;
 using TaranSoft.MyGarage.Contracts.Request;
-using TaranSoft.MyGarage.Repository.Interfaces;
+using TaranSoft.MyGarage.Repository.Interfaces.MongoDB;
 using TaranSoft.MyGarage.Services.Interfaces;
 
 namespace MyGarage.Controllers;
@@ -11,9 +11,9 @@ namespace MyGarage.Controllers;
 public class AuthController : AuthorizedApiController
 {
     private readonly IUsersService _usersService;
-    private readonly IUserRepository _userRepository;
+    private readonly IMongoDbUserRepository _userRepository;
     
-    public AuthController(IUsersService usersService, IUserRepository userRepository) 
+    public AuthController(IUsersService usersService, IMongoDbUserRepository userRepository) 
     {
         _usersService = usersService;
         _userRepository = userRepository;
