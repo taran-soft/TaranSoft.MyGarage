@@ -29,7 +29,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> GetById(long id)
     {
         var user = await _usersService.GetUserById(id);
         var cars = await _carsService.GetByUserId(id);
@@ -49,7 +49,7 @@ public class UserController : ControllerBase
             return NotFound();
         }
 
-        var cars = await _carsService.GetByUserId(Guid.NewGuid());
+        var cars = await _carsService.GetByUserId(user.Id);
 
         return Ok(new GarageDto
         {
@@ -58,7 +58,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, UpdateUserRequest request)
+    public async Task<IActionResult> Update(long id, UpdateUserRequest request)
     {
         var user = _mapper.Map<UserDto>(request);
        var isUpdated = await _usersService.UpdateUser(id, user);

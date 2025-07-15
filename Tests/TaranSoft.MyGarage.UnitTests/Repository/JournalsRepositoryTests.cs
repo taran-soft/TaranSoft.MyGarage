@@ -9,7 +9,7 @@ using TaranSoft.MyGarage.Data.Models.EF.Vehicles;
 using TaranSoft.MyGarage.Repository.EntityFramework;
 using Xunit;
 
-namespace TaranSoft.MyGarage.Tests.Repository;
+namespace TaranSoft.MyGarage.UnitTests.Repository;
 
 public class JournalsRepositoryTests : IDisposable
 {

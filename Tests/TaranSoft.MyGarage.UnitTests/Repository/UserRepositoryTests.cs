@@ -1,15 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using TaranSoft.MyGarage.Data.Models;
 using TaranSoft.MyGarage.Repository.EntityFramework;
 using Xunit;
 using User = TaranSoft.MyGarage.Data.Models.EF.User;
 using GenderEnum = TaranSoft.MyGarage.Data.Models.GenderEnum;
 
-namespace TaranSoft.MyGarage.Tests.Repository;
+namespace TaranSoft.MyGarage.UnitTests.Repository;
 
 public class UserRepositoryTests : IDisposable
 {

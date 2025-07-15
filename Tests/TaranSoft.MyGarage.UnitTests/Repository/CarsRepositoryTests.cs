@@ -6,10 +6,9 @@ using TaranSoft.MyGarage.Data.Models.EF;
 using TaranSoft.MyGarage.Data.Models.EF.Vehicles;
 using TaranSoft.MyGarage.Repository.EntityFramework;
 using Xunit;
-using TaranSoft.MyGarage.Contracts;
 using GenderEnum = TaranSoft.MyGarage.Data.Models.GenderEnum;
 
-namespace TaranSoft.MyGarage.Tests.Repository;
+namespace TaranSoft.MyGarage.UnitTests.Repository;
 
 public class CarsRepositoryTests : IDisposable
 {

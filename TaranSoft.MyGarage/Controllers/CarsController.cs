@@ -49,7 +49,7 @@ public class CarsController : AuthorizedApiController
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateCar(Guid id, [FromBody] UpdateCarRequest request)
+    public async Task<IActionResult> UpdateCar(long id, [FromBody] UpdateCarRequest request)
     {
         await _carsService.Update(id,
             new CarDto
@@ -62,7 +62,7 @@ public class CarsController : AuthorizedApiController
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete(long id)
     {
         await _carsService.Delete(id);
         return NoContent();

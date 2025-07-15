@@ -20,7 +20,7 @@ public class UserRepository : IUserRepository
         return await _dbContext.Users.Find(new BsonDocument()).ToListAsync();
     }
 
-    public async Task<User> GetById(Guid id)
+    public async Task<User> GetById(long id)
     {
         return await _dbContext.Users.Find(x => x.Id == id).FirstOrDefaultAsync();
     }
@@ -35,13 +35,13 @@ public class UserRepository : IUserRepository
         return await _dbContext.Users.Find(x => x.Nickname == name).FirstOrDefaultAsync();
     }
 
-    public async Task<Guid> Create(User user)
+    public async Task<long> Create(User user)
     {
         await _dbContext.Users.InsertOneAsync(user);
         return user.Id;
     }
 
-    public async Task<bool> Update(Guid id, User user)
+    public async Task<bool> Update(long id, User user)
     {
         var result = await _dbContext.Users.UpdateOneAsync(
             Builders<User>.Filter.Eq(x => x.Id, id), 
@@ -60,7 +60,7 @@ public class UserRepository : IUserRepository
         return result.ModifiedCount == 1;
     }
 
-    public async Task Delete(Guid id)
+    public async Task Delete(long id)
     {
         await _dbContext.Users.DeleteOneAsync(x => x.Id == id);
     }

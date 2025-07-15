@@ -5,12 +5,15 @@ using Xunit;
 
 namespace TaranSoft.MyGarage.IntegrationTests.Repository;
 
+[Collection("IntegrationTests Collection")]
 public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
 {
     private readonly GaragesRepository _repository;
+    private readonly DatabaseFixture _fixture;
 
-    public GaragesRepositoryIntegrationTests()
+    public GaragesRepositoryIntegrationTests(DatabaseFixture fixture)
     {
+        _fixture = fixture;
         _repository = new GaragesRepository(DbContext);
     }
 
@@ -127,6 +130,9 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
     public async Task ListAllAsync_ReturnsAllGarages()
     {
         // Arrange
+        // Verify database is clean
+        await _fixture.CleanupDatabase();
+
         var user1 = await SetupCustomUserData("user1@email.com", "testName1", "testNickName1");
         var user2 = await SetupCustomUserData("user2@email.com", "testName2", "testNickName2");
         
@@ -151,6 +157,9 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
     public async Task SearchAsync_WithPagination_ReturnsCorrectGarages()
     {
         // Arrange
+        // Verify database is clean
+        await _fixture.CleanupDatabase();
+
         var user1 = await SetupCustomUserData("user1@email.com", "testName1", "testNickName1");
         var user2 = await SetupCustomUserData("user2@email.com", "testName2", "testNickName2");
         var user3 = await SetupCustomUserData("user3@email.com", "testName3", "testNickName3");
@@ -178,6 +187,8 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
     {
         // Arrange
         // Verify database is clean
+        await _fixture.CleanupDatabase();
+
         var initialCount = await _repository.GetTotalCountAsync();
         Assert.Equal(0, initialCount);
         
@@ -236,4 +247,5 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
         // Assert
         Assert.Null(result);
     }
+    
 } 
