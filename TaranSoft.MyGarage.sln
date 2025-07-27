@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaranSoft.MyGarage.Reposito
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaranSoft.MyGarage.Contracts", "src\TaranSoft.MyGarage.Contracts\TaranSoft.MyGarage.Contracts.csproj", "{59E86CA1-C984-4B19-A1C9-078A207EAC6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaranSoft.MyGarage.Data.Models", "src\TaranSoft.MyGarage.Models\TaranSoft.MyGarage.Data.Models.csproj", "{94C96ABB-293D-4035-BAE0-2F9C14083BA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaranSoft.MyGarage.Models", "src\TaranSoft.MyGarage.Models\TaranSoft.MyGarage.Models.csproj", "{94C96ABB-293D-4035-BAE0-2F9C14083BA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaranSoft.MyGarage.Services.Interfaces", "src\TaranSoft.MyGarage.Services.Interfaces\TaranSoft.MyGarage.Services.Interfaces.csproj", "{B0687EDC-2E2E-4A7D-A073-A3783AF33956}"
 EndProject

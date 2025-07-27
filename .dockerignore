@@ -1,0 +1,17 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.swp
+*.tmp
+Dockerfile
+docker-compose.yml
+Tests/
+DbScripts/
+docker/
+.git/
+.gitmodules
+*.md
+*.log
+node_modules/ 
