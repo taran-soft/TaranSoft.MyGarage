@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Passw0rd123
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+      - ./docker/sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+
+  api:
+    image: mygarage-api
+    container_name: mygarage-api
+    build:
+      context: .
+      dockerfile: ./src/TaranSoft.MyGarage.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=CarsDb;User Id=MyGarageAPI;Password=Passw0rd123;TrustServerCertificate=True;
+    ports:
+      - "7001:80"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  sql_data: 
