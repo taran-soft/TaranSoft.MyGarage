@@ -1,10 +1,10 @@
-# TaranSoft.MyGarage
+# GarageSpace.API
 
 A comprehensive vehicle management system designed for car owners to track their vehicles and log every activity related to their cars, motorcycles, and trailers.
 
-## 🚗 What is TaranSoft.MyGarage?
+## 🚗 What is GarageSpace API?
 
-TaranSoft.MyGarage is a modern web API that helps car owners maintain detailed records of their vehicles and activities. Whether you own cars, motorcycles, or trailers, this system provides a centralized platform to track maintenance, modifications, fuel consumption, and other vehicle-related activities.
+GarageSpace is a modern web API that helps car owners maintain detailed records of their vehicles and activities. Whether you own cars, motorcycles, or trailers, this system provides a centralized platform to track maintenance, modifications, fuel consumption, and other vehicle-related activities.
 
 ## ✨ Key Features
 
@@ -49,7 +49,7 @@ TaranSoft.MyGarage is a modern web API that helps car owners maintain detailed r
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd TaranSoft.MyGarage
+cd GarageSpace
 
 # Restore packages
 dotnet restore
@@ -58,7 +58,7 @@ dotnet restore
 dotnet build
 
 # Run the API
-dotnet run --project src/TaranSoft.MyGarage.API
+dotnet run --project src/GarageSpace.API
 ```
 
 The API will be available at `https://localhost:5001` with Swagger documentation at `https://localhost:5001/swagger`.
@@ -83,13 +83,13 @@ The containerized API will be available at `http://localhost:5000`.
 ## 🏗 Project Structure
 
 ```
-TaranSoft.MyGarage/
+GarageSpace/
 ├── src/
-│   ├── TaranSoft.MyGarage.API/          # Web API endpoints
-│   ├── TaranSoft.MyGarage.Contracts/    # DTOs and interfaces
-│   ├── TaranSoft.MyGarage.Models/       # Entity models
-│   ├── TaranSoft.MyGarage.Services/     # Business logic
-│   └── TaranSoft.MyGarage.Repository/   # Data access layer
+│   ├── GarageSpace.API/          # Web API endpoints
+│   ├── GarageSpace.Contracts/    # DTOs and interfaces
+│   ├── GarageSpace.Models/       # Entity models
+│   ├── GarageSpace.Services/     # Business logic
+│   └── GarageSpace.Repository/   # Data access layer
 ├── Tests/                               # Unit and integration tests
 ├── DbScripts/                           # Database setup scripts
 ├── docker-compose.yml                   # Container orchestration
