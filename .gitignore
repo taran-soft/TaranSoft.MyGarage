@@ -1,16 +1,16 @@
-﻿/.idea/.idea.MyGarage/.idea/
-/TaranSoft.MyGarage.sln.DotSettings.user
-/src/TaranSoft.MyGarage/bin
-/src/TaranSoft.MyGarage/obj
-/src/TaranSoft.MyGarage.*/bin
-/src/TaranSoft.MyGarage.*/obj
+﻿/.idea/.idea.GarageSpace/.idea/
+/GarageSpace.sln.DotSettings.user
+/src/GarageSpace/bin
+/src/GarageSpace/obj
+/src/GarageSpace.*/bin
+/src/GarageSpace.*/obj
 /Tests/bin
 /Tests/obj
 /.vs
 /obj
 
 # Ignore all bin and obj folders in any Tests directory
-Tests/TaranSoft.MyGarage.UnitTests/bin/
-Tests/TaranSoft.MyGarage.UnitTests/obj/
-Tests/TaranSoft.MyGarage.IntegrationTests/bin/
-Tests/TaranSoft.MyGarage.IntegrationTests/obj/
+Tests/GarageSpace.UnitTests/bin/
+Tests/GarageSpace.UnitTests/obj/
+Tests/GarageSpace.IntegrationTests/bin/
+Tests/GarageSpace.IntegrationTests/obj/
